@@ -53,6 +53,7 @@ fn main() {
             );
 
             println!("promote: {:?}", data);
+            let p = &mut *data_inner;
         });
     });
 }
