@@ -53,8 +53,7 @@ impl<T> MutexRW2 for TestMutexRW2<T> {
     //
     // Not possible, there is no way to consume a an immutable reference in Rust
     // Moreover, it is not possible to ensure that outer scopes do not hold an immutable reference
-    fn promote_read_lock<R>(&self) -> &mut Self {
-        todo!();
-        // &mut *(self as *const Self as *mut Self)
+    fn promote_read_lock<R>(mut _self: Self::T, f: impl FnOnce(&mut Self::T) -> R) -> R {
+        f(&mut _self)
     }
 }

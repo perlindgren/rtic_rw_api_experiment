@@ -36,7 +36,7 @@ pub trait MutexRW2 {
 
     fn demote_write_lock<R>(_self: Self::T, f: impl FnOnce(&Self::T) -> R) -> R;
 
-    fn promote_read_lock<R>(&self) -> &mut Self;
+    fn promote_read_lock<R>(_self: Self::T, f: impl FnOnce(&mut Self::T) -> R) -> R;
 }
 
 pub use generated::*;
