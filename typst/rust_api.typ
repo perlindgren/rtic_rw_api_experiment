@@ -406,50 +406,53 @@ let x = mutex_rw.write_lock(|data| {
 
 The Rust compiler would successfully reject the demoted reference from being used to modify the underlying data. However, the demotion will will not be visible to the RTIC framework at run-time. Thus, the code after demotion will still be executed under the protection ceiling of the write lock, with the effect of potentially blocking other higher priority readers.
 
-Still for reasons of code clarity/safety, demotion would not break safety invariants.
+Still for reasons of code clarity/safety, demotion might be useful and would not break safety invariants.
 
 The situation of promotion is more complex, as re-borrowing an immutable reference to obtain a mutable reference would directly violate the Rust borrowing invariants.
 
-To this end we might consider an API extension to allow for promotion of a read lock to a write lock, and vice versa. A potential candidate API design for this:
+To this end we might consider an API extension to allow for promotion of a read lock to a write lock. This however is out of scope for this paper, and is left for future work.
 
-```rust
-impl<T> MutexRW2 for TestMutexRW2<T> {
-    type T = T;
-    //
-    fn read_lock<R>(&self, f: impl FnOnce(&Self::T) -> R) -> R {
-        f(&self.data)
-    }
-    //
-    fn write_lock<R>(&mut self, f: impl FnOnce(&mut Self::T) -> R) -> R {
-        f(&mut self.data)
-    }
 
-    // This would be possible
-    fn demote_write_lock<R>(_self: Self::T, f: impl FnOnce(&Self::T) -> R) -> R {
-        f(&_self)
-    }
-    //
-    // Not possible, there is no way to consume a an immutable reference in Rust
-    // Moreover, it is not possible to ensure that outer scopes do not hold an immutable reference
-    fn promote_read_lock<R>(&self) -> &mut Self {
-        todo!();
-        // &mut *(self as *const Self as *mut Self)
-    }
-}
-```
+// A potential candidate API design for this:
 
-Using this API we can now demote a write lock properly, and the Rust compiler will successfully reject any attempt to use the demoted reference to modify the underlying data as shown below:
+// ```rust
+// impl<T> MutexRW2 for TestMutexRW2<T> {
+//     type T = T;
+//     //
+//     fn read_lock<R>(&self, f: impl FnOnce(&Self::T) -> R) -> R {
+//         f(&self.data)
+//     }
+//     //
+//     fn write_lock<R>(&mut self, f: impl FnOnce(&mut Self::T) -> R) -> R {
+//         f(&mut self.data)
+//     }
 
-```rust
-let x = mutex_rw2.write_lock(|data| {
-    data.x += 1;
-    println!("Write lock: x={}, y={}, z={}", data.x, data.y, data.z);
-    TestMutexRW2::demote_write_lock(data, |data_inner| {
-        let p = &*data_inner; // re-borrow to obtain an immutable reference
-    });
-});
-```
-`demote_write_lock` will consume the mutable reference to the underlying data, and return an immutable reference. However, the Rust compiler will successfully reject any attempt to use the demoted reference to modify the underlying data. As the first parameter is _not_ a reference, Rust will consider is as an associated function (not a normal method), and thus the usage will be un-ergonomic. Notice however, that the demotion is now visible to the RTIC framework at run-time, and thus the ceiling can be lowered to that of the read lock, and thus allowing for higher priority readers to preempt the current task.
+//     // This would be possible
+//     fn demote_write_lock<R>(_self: Self::T, f: impl FnOnce(&Self::T) -> R) -> R {
+//         f(&_self)
+//     }
+//     //
+//     // Not possible, there is no way to consume a an immutable reference in Rust
+//     // Moreover, it is not possible to ensure that outer scopes do not hold an immutable reference
+//     fn promote_read_lock<R>(&self) -> &mut Self {
+//         todo!();
+//         // &mut *(self as *const Self as *mut Self)
+//     }
+// }
+// ```
+
+// Using this API we can now demote a write lock properly, and the Rust compiler will successfully reject any attempt to use the demoted reference to modify the underlying data as shown below:
+
+// ```rust
+// let x = mutex_rw2.write_lock(|data| {
+//     data.x += 1;
+//     println!("Write lock: x={}, y={}, z={}", data.x, data.y, data.z);
+//     TestMutexRW2::demote_write_lock(data, |data_inner| {
+//         let p = &*data_inner; // re-borrow to obtain an immutable reference
+//     });
+// });
+// ```
+// `demote_write_lock` will consume the mutable reference to the underlying data, and return an immutable reference. However, the Rust compiler will successfully reject any attempt to use the demoted reference to modify the underlying data. As the first parameter is _not_ a reference, Rust will consider is as an associated function (not a normal method), and thus the usage will be un-ergonomic. Notice however, that the demotion is now visible to the RTIC framework at run-time, and thus the ceiling can be lowered to that of the read lock, and thus allowing for higher priority readers to preempt the current task.
 
 
 
