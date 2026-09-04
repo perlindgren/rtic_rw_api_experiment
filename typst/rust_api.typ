@@ -43,11 +43,11 @@
     In this paper we review the resource proxy design of the Rust RTIC framework, and highlight type system  features allowing for compile time safety validation. Moreover, we introduce an API extension that allows for readers-writer locks (a special case of multi unit resources) and show that the proposed API successfully enforces the Rust memory safety invariants at compile time.],
   authors: (
     (
-      name: "Valhe ...",
-      //   department: [Department of Computer Science, Electrical and Space Engineering],
-      //   organization: [Luleå University of Technology],
-      //   location: [Luleå, Sweden],
-      //   email: "malte.munch@ltu.se",
+      name: "Valhe Kouneli",
+      department: [Unit of Computing Sciences],
+      organization: [Tampere University],
+      location: [Tampere, Finland],
+      email: "valhe.kouneli@tuni.fi",
     ),
     (
       name: "Henri ...",
