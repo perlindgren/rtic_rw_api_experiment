@@ -78,7 +78,7 @@
 
 = Introduction <introduction>
 
-The safety and security of systems rely increasingly on the behavior of their software stacks. Modern compiler back-ends optimize the code under the assumption that programs are well-formed. In fact, in case of programs having undefined behavior (UB), the compiler is free to generate *any* code along the path leading to up to the point of UB without any regard to the original program semantics. Even worse, the compiler has no obligation to inform the programmer about the presence of UB, thus a program may pass compilation without any warnings or errors and yet have arbitrary behavior at runtime. In effect, for such programs all #pawel("code level") claims to safety and security are void!
+The safety and security of systems rely increasingly on the behavior of their software stacks. Modern compiler back-ends optimize the code under the assumption that programs are well-formed. In fact, in case of programs having undefined behavior (UB), the compiler is free to generate *any* code along the path leading to up to the point of UB without any regard to the original program semantics. Even worse, the compiler has no obligation to inform the programmer about the presence of UB, thus a program may pass compilation without any warnings or errors and yet have arbitrary behavior at runtime. In effect, for such programs all #pawel("code level") claims to safety and security are void!#per("No, unfortunately, all claims are void, e.g., if the code inside of the kernel/trusted zone has UB, the hardware protection mechanisms are not going to help you.")
 
 
 In this paper we focus on a class of UB caused by memory safety violations. To this end, @rust_memory_safety reviews the Rust language and its guarantees to memory safety. In @rtic_framework we review the RTIC framework and how the Rust type system is leveraged to ensure memory safety at compile time. In @rtic_rw_api we introduce an RTIC API extension that allows for readers-writer locks (a special case of multi unit resources) and show that the proposed API (still) successfully enforces the Rust memory safety invariants at compile time. Finally, we conclude the work and contributions in @conclusions.
@@ -87,7 +87,7 @@ In this paper we focus on a class of UB caused by memory safety violations. To t
 
 The Rust programming language enforces strong memory safety guarantees, unless the programmer explicitly opts out by marking code as `unsafe`.
 
-For a majority of program constructs the Rust compiler can at compile time verify memory safety, and reject programs that violate the memory safety rules. In case safety cannot be statically verified, the compiler will inject runtime checks, that halt execution (*panic*), _before_ the program runs into UB. In this way, Rust ensures that code always runs with (well #pawel("is this well needed")) defined behavior. This is in stark contrast to C/C++ where it is completely up to the programmer to ensure defined behavior, and thus positions Rust in a unique and advantageous position for safety and security-critical systems.
+For a majority of program constructs the Rust compiler can at compile time verify memory safety, and reject programs that violate the memory safety rules. In case safety cannot be statically verified, the compiler will inject runtime checks, that halt execution (*panic*), _before_ the program runs into UB. In this way, Rust ensures that code always runs with (well #pawel("is this well needed") #per("not really, thus in parenthesis")) defined behavior. This is in stark contrast to C/C++ where it is completely up to the programmer to ensure defined behavior, and thus positions Rust in a unique and advantageous position for safety and security-critical systems.
 
 The Rust type system is based on an *ownership* model, the principle of which is ensuring that each piece of data has a single owner at any given time. The borrowing mechanism allows for temporary access to data without transferring ownership, under the following rules:
 
@@ -106,7 +106,7 @@ As being outside of control of the Rust compiler, raw memory accesses and sharin
 
 Rust provides a mechanism for marking code blocks as `unsafe`, allowing the programmer to explicitly opt out of the Rust safety guarantees, and thus access the underlying hardware or share mutable data between concurrent tasks. The soundness of `unsafe` code relies on the programmer upholding the invariants from section @rust_memory_safety.
 
-Notice, in comparison to traditional C/C++, we are still in a vastly better position as only the explicitly marked *unsafe* code blocks need manual review and verification, whereas in C/C++ the entire code base is a ticking bomb#pawel("The ticking bomb is maybe a bit taking it too far for a paper (i mean i agree, but...)").
+Notice, in comparison to traditional C/C++, we are still in a vastly better position as only the explicitly marked *unsafe* code blocks need manual review and verification, whereas in C/C++ the entire code base is a ticking bomb#pawel("The ticking bomb is maybe a bit taking it too far for a paper (i mean i agree, but...)").#per("Well, the ticking bomb is not not that bad as a metaphor, in case of UB you might not directly see the problem, the effect might be observable at some later point in time, and even elsewhere (not where the the UB was caused, since we have UB propagation).")
 
 = RTIC framework <rtic_framework>
 
@@ -119,7 +119,7 @@ Leveraging Rust procedural macros, the RTIC framework:
 - performs static analysis of the model (SRP-based resource ceiling analysis etc.),
 - generates code that is compiled to a stand-alone binary.
 
-Run-time overhead is in Rust terms _zero-cost_#pawel("these zero cost maybe should be relaxed, i mean e.g. dispatching a task on Cortex-M is 13 cycles or whatever. i don't see how you can do it better (except for software tasks and just binding each to its own dispatcher, avoiding the queues, as it stands it's totally not zero cost), but it's not zero cost"), where the generated binary efficiently exploits the underlying hardware for scheduling and resource protection without any non-necessary overhead. In fact, one can even claim RTIC to be _sub-zero-cost_ as outperforming hand-written implementations of the same application logic. This is possible as the static analysis allows for optimizations of the entire application model, which is typically out of reach for a human programmer.
+Run-time overhead is in Rust terms _zero-cost_#pawel("these zero cost maybe should be relaxed, i mean e.g. dispatching a task on Cortex-M is 13 cycles or whatever. i don't see how you can do it better (except for software tasks and just binding each to its own dispatcher, avoiding the queues, as it stands it's totally not zero cost), but it's not zero cost"), where the generated binary efficiently exploits the underlying hardware for scheduling and resource protection without any non-necessary overhead. In fact, one can even claim RTIC to be _sub-zero-cost_ as outperforming hand-written implementations of the same application logic. This is possible as the static analysis allows for optimizations of the entire application model, which is typically out of reach for a human programmer. #per("In Rust terms, means that no un-necessary overhead is introduced, NOT that the cost is zero.")
 
 The key to guaranteed memory safety of RTIC is its underlying resource proxy design, where shared resources are represented as proxies that enforce the Rust ownership and borrowing rules.
 
@@ -206,7 +206,11 @@ let d = mutex.lock(|data| {
     data // attempt to leak the reference
 });
 ```
-#pawel("The terminal output was not so nice looking, i've added an interpretation instead. The original is left commented out.")
+#pawel(
+  "The terminal output was not so nice looking, i've added an interpretation instead. The original is left commented out.",
+)
+
+#per("I agree, the terminal output is a bit messy, but it shows exactly the genuine compiler error (for good and bad)")
 The compiler error points out that, the lifetime of `data` ends at the return point of the closure. In essence, had the program compiled successfully, `d` would be pointing to deallocated data.
 /*
 ```terminal
@@ -272,7 +276,11 @@ error[E0499]: cannot borrow `mutex` as mutable more than once at a time
 
 The above examples together show that the `Mutex` implementation successfully leverages the Rust type system to reject Rust safety invariant violations at compile time:
 
-#pawel("did we define these two as THE invariants somewhere earlier? i mean they are both sides of the same coin, IMO the real core issue is mutable aliasing (i.e. leaking of references will eventually cause mutable aliasing once the backing memory is reallocated, which is why it's a problem)")
+#pawel(
+  "did we define these two as THE invariants somewhere earlier? i mean they are both sides of the same coin, IMO the real core issue is mutable aliasing (i.e. leaking of references will eventually cause mutable aliasing once the backing memory is reallocated, which is why it's a problem)",
+) #per(
+  "It is the Rust background section, we should label it, and perhaps clarify that also references always point to valid data, but our abstraction does not touch initialization, per se",
+)
 - leaking of references
 - mutable aliasing of the underlying data
 
@@ -282,7 +290,7 @@ The above examples together show that the `Mutex` implementation successfully le
 In recent work, RTIC-RW has been proposed as an extension to the RTIC framework, allowing for readers-writer locks (a special case of multi unit resources). It has been shown that readers-writer locks can be implemented in a safe manner without implying any additional run-time overhead, thus bringing a strict improvement over the current single unit resource design of RTIC.
 
 In this work we contribute with the API design of RTIC-RW and show that its implementation successfully enforces the Rust memory safety invariants #pawel("Again, we should explicitly define the invariants we are trying to uphold somewhere, or let someone else do it for us by citation") at compile time.
-
+#per("As above")
 == RTIC-core, Proposed MutexRW trait
 
 ```rust
@@ -392,7 +400,12 @@ error[E0502]: cannot borrow `mutex_rw` as mutable because it is also borrowed as
 
 The above examples together show that the `MutexRW` implementation successfully leverages the Rust type system to reject Rust safety invariant violations at compile time:
 
-#pawel("Connecting back to what i wrote before, we don't even demonstrate the preventing of leaking of references. We can easily cut this down to mutable aliasing, which again i think is the core issue, leaking of references is just one way you can run into it.")
+#pawel(
+  "Connecting back to what i wrote before, we don't even demonstrate the preventing of leaking of references. We can easily cut this down to mutable aliasing, which again i think is the core issue, leaking of references is just one way you can run into it.",
+)
+#per(
+  "I disagree, we show that leaking is not possible for stock RTIC, maybe we should add why, its the lifetime of the borrowed reference passed to the closure. For RTIC-RW we mention it is analogous to stock RTIC",
+)
 - leaking of references
 - mutable aliasing of the underlying data
 
