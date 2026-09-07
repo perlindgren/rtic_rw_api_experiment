@@ -351,11 +351,11 @@ The above examples together show that the `MutexRW` implementation successfully 
 
 = Discussion and Future Work<discussion>
 
-As a point of reflection, we note that the underlying SRP theory allows for general multi unit resources. However, for the general case any implementation thereof would require run-time tracking of the number of units currently held, thus imply a run-time overhead. To investigate wether the cost would be acceptable in practice is left for future work.
+As a point of reflection, we note that the underlying SRP theory allows for general multi-unit resources. However, implementing the general case would require run-time tracking of the number of units currently held, and would thus incur run-time overhead. Whether this is acceptable in practice is left for future work.
 
-Another observation is that SRP allows promotion and demotion of held units. On a glance, this would allow for a read lock to be promoted to a write lock, and vice versa.
+Another observation is that technically, SRP does not allow taking a write lock inside a read lock, even though it is a semantically valid operation outside of the Rust context. In SRP, RW resources are modeled as multi-unit resources, where the number of units corresponds to the number of jobs accessing the resource, and a read lock uses one unit and a write lock all of the units. Therefore, inside a read lock, not all units are available, and a write lock cannot be taken. However, we may safely allow a write lock to be taken if no other job is holding locks of the resource, still upholding all SRP-given scheduling guarantees. Thus, SRP allows the promotion of a read lock to a write lock and demoting it back to a read lock once the write operation is over.
 
-Reference demotion is indeed possible without any changes to the proposed MutexRW API as follows:
+Reference demotion is possible without any changes to the proposed MutexRW API as follows:
 
 ```rust
 let x = mutex_rw.write_lock(|data| {
@@ -387,9 +387,9 @@ To this end we might consider an API extension to allow for promotion of a read 
 
 = Conclusions <conclusions>
 
-In this paper we have reviewed the resource proxy design of the Rust RTIC framework, and highlighted type system features allowing for compile time safety validation. Moreover, we have introduced an API extension that allows for readers-writer locks (a special case of multi unit resources) and shown that the proposed API successfully enforces the Rust memory safety invariants at compile time.
+In this paper we have reviewed the resource-proxy design of the Rust-based RTIC framework and highlighted the type system features that enable compile-time safety guarantees. We have also introduced an API extension that enables the usa of readers-writer locks and shown that the proposed API successfully enforces Rust's memory safety invariants at compile time.
 
-While RTIC-RW brings a strict improvement to scheduling properties over the current single unit resource design of RTIC, prior work lacked the API design to ensure compile time rejection of Rust safety invariant violations. In this work we have detailed the API design of the underlying `MutexRW` and shown that its implementation successfully enforces the Rust memory safety invariants at compile time.
+While RTIC-RW provides a strict improvement in scheduling properties over RTIC's current single unit resource design, prior work lacked an API design that ensures compile-time rejection of violations of Rust's safety invariants. In this work, we have detailed the API design of the underlying `MutexRW` and shown that its implementation successfully enforces these invariants at compile time.
 
 
 // Example references appendix: @appendix , listing: @lst:foo
