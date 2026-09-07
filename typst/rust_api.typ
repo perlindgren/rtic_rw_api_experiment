@@ -12,13 +12,23 @@
   ),
 )
 
+
+/// altered version of https://github.com/typst/templates/blob/main/charged-ieee/lib.typ
+/// DOES NOT WORK WITH DEEPER LEVELS
 #let appendix(body) = {
-  set heading(numbering: "A.1 :", supplement: [Annexe])
+  set heading(numbering: "A.1", supplement: [Appendix])
   counter(heading).update(0)
+  show heading: it => {
+    set text(11pt, weight: 400)
+    set align(center)
+    show: block.with(above: 15pt, below: 13.75pt, sticky: true)
+    show: smallcaps
+    [#it.supplement #counter(heading).display()]
+    "\n"
+    it.body
+  }
   body
 }
-
-
 
 // Please flip this variable to disable comments, do not remove them
 #let comments_enabled = true
@@ -506,13 +516,20 @@ In this paper we have reviewed the resource proxy design of the Rust RTIC framew
 While RTIC-RW brings a strict improvement to scheduling properties over the current single unit resource design of RTIC, prior work lacked the API design to ensure compile time rejection of Rust safety invariant violations. In this work we have detailed the API design of the underlying `MutexRW` and shown that its implementation successfully enforces the Rust memory safety invariants at compile time.
 
 
+Example references appendix: @appendix , listing: @lst:foo
 
-#set heading(numbering: "A.1 :", supplement: [Annexe])
-#counter(heading).update(0)
+// This is incredibly funky, just what it is.
+#pagebreak()
+#show: appendix
+= <appendix>
+appendix body
 
-= Test heading
-
-Test body
+#figure(
+  caption: "test listing",
+  ```shell
+  rm -rf /
+  ```
+)<lst:foo>
 
 
 
