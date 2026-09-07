@@ -56,11 +56,11 @@
 #let fake-label(name) = place[#figure(supplement: none)[]#label(name)]
 
 #show: ieee.with(
-  title: [Rust safety invariants for RTIC with readers writer locks],
+  title: [Rust Safety Invariants for RTIC With Readers-Writer Locks],
   abstract: [
     The RTIC framework allows for safe concurrent programming in Rust. By leveraging on the Rust type system, illegal programs (that would violate memory safety) are rejected by the compiler.
 
-    In this paper we review the resource proxy design of the Rust RTIC framework, and highlight type system  features allowing for compile time safety validation. Moreover, we introduce an API extension that allows for readers-writer locks (a special case of multi unit resources) and show that the proposed API successfully enforces the Rust memory safety invariants at compile time.],
+    In this paper we review the resource proxy design of the Rust RTIC framework, and highlight type system  features allowing for compile-time safety validation. Moreover, we introduce an API extension that allows for readers-writer locks (a special case of multi unit resources) and show that the proposed API successfully enforces the Rust memory safety invariants at compile time.],
   authors: (
     (
       name: "Valhe Kouneli",
@@ -102,13 +102,13 @@
 
 The safety and security of systems rely increasingly on the behavior of their software stacks. Modern compiler back-ends optimize the code under the assumption that programs are well-formed. In fact, in case of programs having undefined behavior (UB), the compiler is free to generate *any* code along the path leading to up to the point of UB without any regard to the original program semantics. Even worse, the compiler has no obligation to inform the programmer about the presence of UB, thus a program may pass compilation without any warnings or errors and yet express arbitrary behavior at runtime. In effect, for such programs all #pawel("code level") claims to safety and security are void!#per("No, unfortunately, all claims are void, e.g., if the code inside of the kernel/trusted zone has UB, the hardware protection mechanisms are not going to help you. Further motivation follows here:") This is unfortunately the case even for ARM Trust-Zone based systems (as well as PMP equipped RISC-V systems), where the hardware protection mechanisms are not going to help you if the code inside of the kernel/trusted zone has UB.
 
-In this paper we focus on a class of UB caused by memory safety violations. To this end, @rust_memory_safety reviews the Rust language and its guarantees to memory safety. In @rtic_framework we review the RTIC framework and how the Rust type system is leveraged to ensure memory safety at compile time. In @rtic_rw_api we introduce an RTIC API extension that allows for readers-writer locks (a special case of multi unit resources) and show that the proposed API (still) successfully enforces the Rust memory safety invariants at compile time. Finally, we conclude the work and contributions in @conclusions.
+In this paper we focus on a class of UB caused by memory safety violations. To this end, @rust_memory_safety reviews the Rust language and its guarantees to memory safety. In @rtic_framework we review the RTIC framework and how the Rust type system is leveraged to ensure memory safety at compile time. In @rtic_rw_api, we introduce an RTIC API extension that supports readers-writer locks for read-write resources, a special case of multi-unit resources, allowing concurrent readers and thereby reducing unnecessary blocking. We show that the proposed API continues to enforce Rust's memory-safety invariants at compile time. Finally, we conclude the work and contributions in @conclusions.
 
 = Rust memory safety <rust_memory_safety>
 
 The Rust programming language enforces strong memory safety guarantees, unless the programmer explicitly opts out by marking code as `unsafe`.
 
-For a majority of program constructs the Rust compiler can at compile time verify memory safety, and reject programs that violate the memory safety rules. In case safety cannot be statically verified, the compiler will inject runtime checks, that halt execution (*panic*), _before_ the program runs into UB. In this way, Rust ensures that code always runs with #per("removed the (well)") defined behavior. This is in stark contrast to C/C++ where it is completely up to the programmer to ensure defined behavior, and thus positions Rust in a unique and advantageous position for safety and security-critical systems.
+For a majority of program constructs the Rust compiler can verify memory safety at compile time, and reject programs that violate the memory safety rules. In case safety cannot be statically verified, the compiler will inject runtime checks that halt execution (*panic*), _before_ the program runs into UB. In this way, Rust ensures that code always runs with #per("removed the (well)") defined behavior. This is in stark contrast to C/C++ where it is completely up to the programmer to ensure defined behavior, and thus positions Rust in a unique and advantageous position for safety and security-critical systems.
 
 == Rust Memory Safety Invariants <rust_safety_invariants>
 The Rust type system is based on an *ownership* model, the principle of which is ensuring that each piece of data has a single owner at any given time. The borrowing mechanism allows for temporary access to data without transferring ownership, under the following rules:
