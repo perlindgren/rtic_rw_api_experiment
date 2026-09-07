@@ -31,7 +31,7 @@
 }
 
 // Please flip this variable to disable comments, do not remove them
-#let comments_enabled = true
+#let comments_enabled = false
 // Comment function definitions:
 #let pawel(body) = {
   if comments_enabled {
@@ -218,7 +218,7 @@ We can safely copy the underlying data in case the type implements the `Copy` tr
 
 === Example Leaking <example_leaking>
 
-Attempts to leak a reference to the underlying `NonAtomicU32` outside of the protected closure are be rejected by the compiler.
+Attempts to leak a reference to the underlying `NonAtomicU32` outside of the protected closure are rejected by the compiler.
 
 ```rust
 let d = mutex.lock(|data| {
@@ -230,32 +230,8 @@ let d = mutex.lock(|data| {
   "The terminal output was not so nice looking, i've added an interpretation instead. The original is left commented out.",
 )
 
-#per("I agree, the terminal output is a bit messy, but it shows exactly the genuine compiler error (for good and bad)")
-The compiler error
-#footnote[
-  ```terminal
-  error: lifetime may not live long enough
-    --> examples/mutex_leak.rs:18:9
-  15 |     let d = mutex.lock(|data| {
-     |                         ----- return type of closure is &'2 mut NonAtomicU32
-     |                         |
-     |                         has type `&'1 mut NonAtomicU32`
-  ...
-  18 |         data
-     |         ^^^^ returning this value requires that `'1` must outlive `'2`
-  help: dereference the return value
-  18 |         *data
-  ```
-]
-
-points out that, the lifetime of `data` ends at the return point of the closure. #per(" removed Pawels text: In essence, had the program compiled successfully, `d` would be pointing to deallocated data").#per("No, there is no de-allocation, the underlying data is statically allocated, the problem that leaking a pointer directly breaks with the Rust borrowing invariants. It might be worth clarifying as follows:") In case of leaking, the Rust borrowing invariants would be violated, causing a potential race condition (as a leaked reference would be accessible concurrently from multiple tasks of the system outside of the protection of the `Mutex` lock). //The compiler error message is shown below:
-
-
-
-
-#per(
-  "I think its nice to show the actual compiler error, Now I tired it as a footnote, alternatively we could try to have an appendix to get it out the way, maybe with a smaller font",
-)
+#per("Moved to appendix: @appendix")
+The compiler error (@appendix, @lst:mutex_leak) points out that, the lifetime of `data` ends at the return point of the closure. #per(" removed Pawels text: In essence, had the program compiled successfully, `d` would be pointing to deallocated data").#per("No, there is no de-allocation, the underlying data is statically allocated, the problem that leaking a pointer directly breaks with the Rust borrowing invariants. It might be worth clarifying as follows:") In case of leaking, the Rust borrowing invariants would be violated, causing a potential race condition (as a leaked reference would be accessible concurrently from multiple tasks of the system outside of the protection of the `Mutex` lock). //The compiler error message is shown below:
 
 === Mutex nesting <example_mutex_nesting>
 
@@ -270,37 +246,8 @@ let d = mutex.lock(|data| {
     });
 });
 ```
-Notice here that both `data` and `data_inner` are mutable references to the _same_ underlying data, which violates Rust's borrowing invariants @rust_safety_invariants, something pointed out by the resulting compiler error.
+Notice here that both `data` and `data_inner` are mutable references to the _same_ underlying data, which violates Rust's borrowing invariants @rust_safety_invariants, as pointed out by the resulting compiler error (@appendix, @lst:mutex_nesting).
 
-/*
-```rust
-error[E0499]: cannot borrow `mutex` as mutable more than once at a time
-  --> examples/mutex_nesting.rs:15:13
-15 |       let d = mutex.lock(|data| {
-   |               ^     ---- ------ first mutable borrow occurs here
-   |               |     |
-   |  _____________|     first borrow later used by call
-   | |
-16 | |         data.x += 1;
-18 | |         let d = mutex.lock(|data| {
-   | |                 ----- first borrow occurs due to use of `mutex` in closure
-...  |
-22 | |         *data
-23 | |     });
-   | |______^ second mutable borrow occurs here
-
-error[E0499]: cannot borrow `mutex` as mutable more than once at a time
-  --> examples/mutex_nesting.rs:15:24
-15 |     let d = mutex.lock(|data| {
-   |             ----- ---- ^^^^^^ second mutable borrow occurs here
-   |             |     |
-   |             |     first borrow later used by call
-   |             first mutable borrow occurs here
-...
-18 |         let d = mutex.lock(|data| {
-   |                 ----- second borrow occurs due to use of `mutex` in closure
-```
-*/
 === Mutex safety guarantees
 
 The above examples together show that the `Mutex` implementation successfully leverages the Rust type system to reject safety violations (see @rust_safety_invariants) at compile time:
@@ -372,21 +319,8 @@ mutex_rw.read_lock(|data| {
     });
 });
 ```
-Notice here that both `data` and `data_inner` are references to the _same_ underlying data, with `data_inner` being a mutable reference, thus violating Rust's borrowing invariants. This is succesfully caught by the Rust compiler.
+Notice here that both `data` and `data_inner` are references to the _same_ underlying data, with `data_inner` being a mutable reference, thus violating Rust's borrowing invariants. This is successfully caught by the Rust compiler (@appendix, @lst:mutex_rw_r_w_nesting).
 
-/*
-```rust
-error[E0502]: cannot borrow `mutex_rw` as mutable because it is also borrowed as immutable
-  --> examples/mutex_rw_r_w.rs:15:24
-15 |     mutex_rw.read_lock(|data| {
-   |     -------- --------- ^^^^^^ mutable borrow occurs here
-   |     |        |
-   |     |        immutable borrow later used by call
-   |     immutable borrow occurs here
-17 |         mutex_rw.write_lock(|data_inner| {
-   |         -------- second borrow occurs due to use of `mutex_rw` in closure
-```
-*/
 === MutexRW Write-Read nesting <example_mutex_wr_nesting>
 
 Inverting the lock acquisition order from the previous example:
@@ -398,29 +332,8 @@ mutex_rw.write_lock(|data| {
     });
 });
 ```
-Here, again, `data` and `data_inner` are references to the same data, with `data` being mutable. This violation is succesfully caught by the Rust compiler, analogous to previous example.
+Here, again, `data` and `data_inner` are references to the same data, with `data` being mutable. This violation is successfully caught by the Rust compiler, analogous to previous example (@appendix, @lst:mutex_rw_w_r_nesting).
 
-/*
-With the corresponding compiler error message:
-
-```rust
-error[E0502]: cannot borrow `mutex_rw` as mutable because it is also borrowed as immutable
-  --> examples/mutex_rw_w_r.rs:15:5
-   |
-15 |       mutex_rw.write_lock(|data| {
-   |       ^        ---------- ------ immutable borrow occurs here
-   |       |        |
-   |  _____|        immutable borrow later used by call
-   | |
-16 | |         data.x += 1;
-18 | |         mutex_rw.read_lock(|data_inner| {
-   | |         -------- first borrow occurs due to use of `mutex_rw` in closure
-...  |
-23 | |         });
-24 | |     });
-   | |______^ mutable borrow occurs here
-```
-*/
 === MutexRW safety guarantees
 
 The above examples together show that the `MutexRW` implementation successfully leverages the Rust type system to reject Rust safety invariant violations at compile time:
@@ -460,6 +373,121 @@ The situation of promotion is more complex, as re-borrowing an immutable referen
 To this end we might consider an API extension to allow for promotion of a read lock to a write lock. This however is out of scope for this paper, and is left for future work.
 
 
+
+
+
+
+
+
+
+
+
+
+= Conclusions <conclusions>
+
+In this paper we have reviewed the resource proxy design of the Rust RTIC framework, and highlighted type system features allowing for compile time safety validation. Moreover, we have introduced an API extension that allows for readers-writer locks (a special case of multi unit resources) and shown that the proposed API successfully enforces the Rust memory safety invariants at compile time.
+
+While RTIC-RW brings a strict improvement to scheduling properties over the current single unit resource design of RTIC, prior work lacked the API design to ensure compile time rejection of Rust safety invariant violations. In this work we have detailed the API design of the underlying `MutexRW` and shown that its implementation successfully enforces the Rust memory safety invariants at compile time.
+
+
+// Example references appendix: @appendix , listing: @lst:foo
+
+// This is incredibly funky, just what it is.
+#pagebreak()
+#show: appendix
+= Compiler Error Messages<appendix>
+Compiler error messages have been slightly reformatted for clarity, but are otherwise genuine compiler output. Notice that examples in the main text are excerpts from real code thus do not match error messages 1-1.
+
+== Original RTIC Mutex leaking error messages
+
+#figure(
+  caption: "`Mutex` leaking error message",
+  ```terminal
+  error: lifetime may not live long enough
+    --> examples/mutex_leak.rs:18:9
+  15 |     let d = mutex.lock(|data| {
+     |                         ----- return type of closure is &'2 mut NonAtomicU32
+     |                         |
+     |                         has type `&'1 mut NonAtomicU32`
+  ...
+  18 |         data
+     |         ^^^^ returning this value requires that `'1` must outlive `'2`
+  help: dereference the return value
+  18 |         *data
+  ```,
+)<lst:mutex_leak>
+
+#figure(
+  caption: "`Mutex` nesting error message",
+  ```rust
+  error[E0499]: cannot borrow `mutex` as mutable more than once at a time
+    --> examples/mutex_nesting.rs:15:13
+  15 |       let d = mutex.lock(|data| {
+     |               ^     ---- ------ first mutable borrow occurs here
+     |               |     |
+     |  _____________|     first borrow later used by call
+     | |
+  16 | |         data.x += 1;
+  18 | |         let d = mutex.lock(|data| {
+     | |                 ----- first borrow occurs due to use of `mutex` in closure
+  ...  |
+  22 | |         *data
+  23 | |     });
+     | |______^ second mutable borrow occurs here
+
+  error[E0499]: cannot borrow `mutex` as mutable more than once at a time
+    --> examples/mutex_nesting.rs:15:24
+  15 |     let d = mutex.lock(|data| {
+     |             ----- ---- ^^^^^^ second mutable borrow occurs here
+     |             |     |
+     |             |     first borrow later used by call
+     |             first mutable borrow occurs here
+  ...
+  18 |         let d = mutex.lock(|data| {
+     |                 ----- second borrow occurs due to use of `mutex` in closure
+  ```,
+)<lst:mutex_nesting>
+
+== MutexRW leaking error messages
+
+#figure(
+  caption: "`MutexRW` read-write nesting error message",
+  ```rust
+  error[E0502]: cannot borrow `mutex_rw` as mutable because it is also borrowed as immutable
+    --> examples/mutex_rw_r_w.rs:15:24
+  15 |     mutex_rw.read_lock(|data| {
+     |     -------- --------- ^^^^^^ mutable borrow occurs here
+     |     |        |
+     |     |        immutable borrow later used by call
+     |     immutable borrow occurs here
+  17 |         mutex_rw.write_lock(|data_inner| {
+     |         -------- second borrow occurs due to use of `mutex_rw` in closure
+  ```,
+)<lst:mutex_rw_r_w_nesting>
+
+#figure(
+  caption: "`MutexRW` write-read nesting error message",
+  ```rust
+  error[E0502]: cannot borrow `mutex_rw` as mutable because it is also borrowed as immutable
+    --> examples/mutex_rw_w_r.rs:15:5
+     |
+  15 |       mutex_rw.write_lock(|data| {
+     |       ^        ---------- ------ immutable borrow occurs here
+     |       |        |
+     |  _____|        immutable borrow later used by call
+     | |
+  16 | |         data.x += 1;
+  18 | |         mutex_rw.read_lock(|data_inner| {
+     | |         -------- first borrow occurs due to use of `mutex_rw` in closure
+  ...  |
+  23 | |         });
+  24 | |     });
+     | |______^ mutable borrow occurs here
+  ```,
+)<lst:mutex_rw_w_r_nesting>
+
+// To be further investigated.
+//
 // A potential candidate API design for this:
 
 // ```rust
@@ -500,36 +528,3 @@ To this end we might consider an API extension to allow for promotion of a read 
 // });
 // ```
 // `demote_write_lock` will consume the mutable reference to the underlying data, and return an immutable reference. However, the Rust compiler will successfully reject any attempt to use the demoted reference to modify the underlying data. As the first parameter is _not_ a reference, Rust will consider is as an associated function (not a normal method), and thus the usage will be un-ergonomic. Notice however, that the demotion is now visible to the RTIC framework at run-time, and thus the ceiling can be lowered to that of the read lock, and thus allowing for higher priority readers to preempt the current task.
-
-
-
-
-
-
-
-
-
-= Conclusions <conclusions>
-
-In this paper we have reviewed the resource proxy design of the Rust RTIC framework, and highlighted type system features allowing for compile time safety validation. Moreover, we have introduced an API extension that allows for readers-writer locks (a special case of multi unit resources) and shown that the proposed API successfully enforces the Rust memory safety invariants at compile time.
-
-While RTIC-RW brings a strict improvement to scheduling properties over the current single unit resource design of RTIC, prior work lacked the API design to ensure compile time rejection of Rust safety invariant violations. In this work we have detailed the API design of the underlying `MutexRW` and shown that its implementation successfully enforces the Rust memory safety invariants at compile time.
-
-
-Example references appendix: @appendix , listing: @lst:foo
-
-// This is incredibly funky, just what it is.
-#pagebreak()
-#show: appendix
-= <appendix>
-appendix body
-
-#figure(
-  caption: "test listing",
-  ```shell
-  rm -rf /
-  ```
-)<lst:foo>
-
-
-
