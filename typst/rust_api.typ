@@ -167,9 +167,9 @@ The `lock` method takes a closure that receives a mutable reference to the prote
 
 == Mutex trait implementation
 
-For each shared resource in the system, the RTIC framework generates a concrete implementation of the `Mutex` trait, which based on the priority of the tasks accessing it, ensures safe concurrent access (i.e, exclusive access).
+For each shared resource in the system, the RTIC framework generates a concrete implementation of the `Mutex` trait, which ensures safe concurrent access (i.e, exclusive access) that is based on the priority of the tasks accessing it.
 
-To illustrate the principle, we side step the RTIC framework, and implement the `Mutex` trait manually.
+To illustrate the principle, we side-step the RTIC framework, and implement the `Mutex` trait manually.
 
 ```rust
 pub struct TestMutex<T> {
@@ -181,9 +181,9 @@ impl<T> Mutex for TestMutex<T> {
 
     fn lock<R>(&mut self, f: impl FnOnce(&mut Self::T) -> R) -> R {
         // In a real implementation, this would be generated to ensure exclusive access to the data
-        // For SRP, raise system ceiling to that of the highest priority task accessing the resource
+        // As dictated by SRP, raise system ceiling to that of the highest priority task accessing the resource
         f(&mut self.data)
-        // For SRP, restore (old) system ceiling
+        // As dictated by SRP, restore (old) system ceiling
     }
 }
 ```
@@ -196,7 +196,7 @@ In the following we will illustrate how the `Mutex` implementation successfully 
 
 === Example Valid Access
 
-To illustrate the principle, we side step the RTIC framework and manually implement the `Mutex` trait for a simple data structure, `NonAtomicU32` (which cannot be safely shared between concurrent tasks without resource protection in place).
+To illustrate the principle, we again side-step the RTIC framework and manually implement the `Mutex` trait for a simple data structure, `NonAtomicU32` (which cannot be safely shared between concurrent tasks without resource protection in place).
 
 An example of valid resource use:
 
@@ -235,7 +235,7 @@ let d = mutex.lock(|data| {
 )
 
 #per("Moved to appendix: @appendix")
-The compiler error (@appendix, @lst:mutex_leak) points out that, the lifetime of `data` ends at the return point of the closure. #per(" removed Pawels text: In essence, had the program compiled successfully, `d` would be pointing to deallocated data").#per("No, there is no de-allocation, the underlying data is statically allocated, the problem that leaking a pointer directly breaks with the Rust borrowing invariants. It might be worth clarifying as follows:") In case of leaking, the Rust borrowing invariants would be violated, causing a potential race condition (as a leaked reference would be accessible concurrently from multiple tasks of the system outside of the protection of the `Mutex` lock). //The compiler error message is shown below:
+The compiler error (@appendix, @lst:mutex_leak) points out that the lifetime of `data` ends at the return point of the closure.#per(" removed Pawels text: In essence, had the program compiled successfully, `d` would be pointing to deallocated data")#per("No, there is no de-allocation, the underlying data is statically allocated, the problem that leaking a pointer directly breaks with the Rust borrowing invariants. It might be worth clarifying as follows:") If the reference was leaked, Rust's borrowing invariants would be violated, causing a potential race condition: a leaked reference would be accessible concurrently from multiple tasks of the system outside of the protection of the `Mutex` lock. //The compiler error message is shown below:
 
 === Mutex nesting <example_mutex_nesting>
 
@@ -250,14 +250,14 @@ let d = mutex.lock(|data| {
     });
 });
 ```
-Notice here that both `data` and `data_inner` are mutable references to the _same_ underlying data, which violates Rust's borrowing invariants @rust_safety_invariants, as pointed out by the resulting compiler error (@appendix, @lst:mutex_nesting).
+Notice here that both `data` and `data_inner` are mutable references to the _same_ underlying data, which violates Rust's borrowing invariants introduced in @rust_safety_invariants. This is also pointed out by the resulting compiler error (@appendix, @lst:mutex_nesting).
 
 === Mutex safety guarantees
 
-The above examples together show that the `Mutex` implementation successfully leverages the Rust type system to reject safety violations (see @rust_safety_invariants) at compile time:
+The above examples together show that the `Mutex` implementation successfully leverages the Rust type system to reject safety violations at compile time:
 
-- leaking of references (see @example_leaking)
-- mutable aliasing of the underlying data (see @example_mutex_nesting)
+- leaking of references (see @example_leaking),
+- mutable aliasing of the underlying data (see @example_mutex_nesting).
 
 
 = RTIC-RW, Readers-Writer Locks <rtic_rw_api>
