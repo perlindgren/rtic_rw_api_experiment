@@ -116,19 +116,19 @@ The Rust type system is based on an *ownership* model, the principle of which is
 - there can be either one mutable reference, or any number of immutable references to a piece of data at a time, and
 - references must always be valid.
 
-These rules are enforced at compile time by the Rust compiler. For this work we focus on the first rule (as data initialization is out of scope), and refer to it as the _Rust memory safety invariants_.
+These rules are enforced at compile time by the Rust compiler. In this work, we focus on the first rule (as data initialization is out of scope), and refer to it as the _Rust memory safety invariants_.
 
 == Bare metal systems<bare-metal-systems>
 
 In context of bare metal systems, we typically need to
-- access the underlying hardware (raw memory accesses), and to
+- access the underlying hardware (raw memory accesses),
 - share mutable data between concurrent tasks (e.g., interrupt handlers).
 
-As being outside of control of the Rust compiler, raw memory accesses and sharing of mutable data are inherently `unsafe`.
+As they are outside the control of the Rust compiler, raw memory accesses and sharing mutable data are inherently `unsafe`.
 
 Rust provides a mechanism for marking code blocks as `unsafe`, allowing the programmer to explicitly opt out of the Rust safety guarantees, and thus access the underlying hardware or share mutable data between concurrent tasks. The soundness of `unsafe` code relies on the programmer upholding the invariants from section @rust_memory_safety.
 
-Notice, in comparison to traditional C/C++, we are still in a vastly better position as only the explicitly marked *unsafe* code blocks need manual review and verification, whereas in C/C++ the entire code base is a ticking bomb#pawel("The ticking bomb is maybe a bit taking it too far for a paper (i mean i agree, but...)").#per("Well, the ticking bomb is not not that bad as a metaphor, in case of UB you might not directly see the problem, the effect might be observable at some later point in time, and even elsewhere (not where the the UB was caused, since we have UB propagation).") The _ticking bomb_ analogy might sound overly dramatic, but it is well grounded in the temporal nature of UB propagation, where effects of UB may be not be directly observable, but manifest at some later point in time. As UB is permissible at C/C++ language level, the best you can hope for is that safety violations lead to immediate and observable effects (like halting the system), but unless proven correct by formal verification, C/C++ code bases are inherently unsafe, and thus _ticking bombs_.
+Notice that, compared to traditional C/C++, we are still in a vastly better position: only explicitly marked *unsafe* code blocks require manual review and verification, whereas in C/C++ the entire code base is potentially unsafe. A key aspect of UB is its temporal nature: the effects of UB may be not be directly observable, but may manifest at some later point in time. As UB is permissible at C/C++ language level, the best one can hope for is that safety violations lead to immediate and observable effects (like halting the system). Unless proven correct through formal verification, C/C++ code bases are inherently unsafe.
 
 = RTIC framework <rtic_framework>
 
