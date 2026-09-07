@@ -353,10 +353,10 @@ The above examples together show that the `MutexRW` implementation successfully 
 
 == Proposed MutexR trait <mutex_r>
 
-In compliance with the RTIC framework, we can introduce read-only accesses proxies.
+The current RTIC framework can be modified to allow for an additional keyword in the task definition indicating that the task only reads the resource, and thus should be given a read-only proxy `MutexR` rather than a read-write proxy `MutexRW`.
 
 ```rust
-// mutex read-only proxy is passed through the task context, and is guaranteed to be unique for the task
+// read-only proxy is passed through the task context, and is guaranteed to be unique for the task
 pub trait MutexR {
     /// Data protected by the mutex
     type T;
@@ -372,9 +372,9 @@ A read-only proxy can only be used to read the underlying data. It will analogou
 
 = Discussion and Future Work<discussion>
 
-By defining a separate read-resource-proxy that provides only a `read_lock` operation, an RTIC task may be given read-only access to a resource. The current API can be modified to allow for an additional keyword in the task definition to instruct the macro that the task only reads an RW resource and should be given access to the read-proxy rather than the mutex-proxy. Despite there being two proxies to the same resource, Rust's memory safety invariants are not violated if it is ensured that a task will get access to at most one proxy of each resource. The proposed additional keyword can also be used by the macros to determine resource access types and the resource ceiling associated with each resource's read and write lock.
+// By defining a separate read-resource-proxy that provides only a `read_lock` operation, an RTIC task may be given read-only access to a resource. The current API can be modified to allow for an additional keyword in the task definition to instruct the macro that the task only reads an RW resource and should be given access to the read-proxy rather than the mutex-proxy. Despite there being two proxies to the same resource, Rust's memory safety invariants are not violated if it is ensured that a task will get access to at most one proxy of each resource. The proposed additional keyword can also be used by the macros to determine resource access types and the resource ceiling associated with each resource's read and write lock.
 
-Another observation is that, while such an operation is not safe in Rust, SRP itself permits a write lock to be acquired inside a read lock if no other job holds locks of the resource, while still preserving all scheduling guarantees provided by SRP.
+An observation is that, while such an operation is not safe in Rust, SRP itself permits a write lock to be acquired inside a read lock if no other job holds locks of the resource, while still preserving all scheduling guarantees provided by SRP.
 
 Under SRP, RW resources are modeled as multi-unit resources, where the number of units corresponds to the number of jobs that may access the resource. A read operation requires acquiring one unit, and a write lock requires acquiring all units. To safely perform a write operation, it suffices for the task to have acquired all resource units and therefore mutually exclude all other tasks from accessing the resource.
 
@@ -412,6 +412,7 @@ While RTIC-RW provides a strict improvement in scheduling properties over RTIC's
 = Compiler Error Messages<appendix>
 Compiler error messages have been slightly reformatted for clarity, but are otherwise genuine compiler output. Notice that examples in the main text are excerpts from real code thus do not match error messages 1-1.
 
+#pagebreak()
 
 #figure(
   caption: "`Mutex` leaking error message",
