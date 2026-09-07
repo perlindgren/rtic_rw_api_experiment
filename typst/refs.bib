@@ -1,0 +1,1267 @@
+
+@article{safety2026,
+	title = {Safety and Security Critical Systems with Rust},
+	volume = {98},
+	issn = {1939-8115},
+	url = {https://doi.org/10.1007/s11265-026-02011-x},
+	doi = {10.1007/s11265-026-02011-x},
+	abstract = {Rust is a modern systems level language with built in safety features providing strong guarantees to memory safety and defined behavior. In this work we identify challenges and opportunities for adopting Rust in the context of safety-critical systems. In particular we focus on software safety and security requirements akin to {ISO} 26262, {IEC} 61508, and {ISO}/{SAE} 21434. We discuss Rust based development in relation to commonplace C/C++ software design and validation processes. Furthermore we compare two distinct system categories: hosted and bare-metal systems and which opportunities and challenges developers face in the context of safety and security certification in each of them.},
+	pages = {40},
+	number = {2},
+	journaltitle = {Journal of Signal Processing Systems},
+	shortjournal = {Journal of Signal Processing Systems},
+	author = {Munch, Malte and Lindner, Marcus and Eriksson, Johan and Dzialo, Pawel and Lindgren, Per},
+	date = {2026-08-20},
+}
+@INPROCEEDINGS{easy,
+  author={Dzialo, Pawel and Joensson, Ivar and Muench, Malte and Serrander, Erik and Eriksson, Johan and Lindgren, Per},
+  booktitle={DVCon Europe 2025; Design and Verification Conference and Exibition},
+  title={Minimally Intrusive Safety and Security Verification of Rust RTIC Applications},
+  year={2025},
+  volume={},
+  number={},
+  pages={22-28},
+  keywords={},
+  doi={10.30420/566664004}}
+
+@ARTICLE{pcs,
+  author={Nurmi, Antti and Kalache, Abdesattar and Lunnikivi, Henri and Lindgren, Per and Hämäläinen, Timo D.},
+  journal={IEEE Transactions on Very Large Scale Integration (VLSI) Systems},
+  title={Efficient and Predictable Context Switching for Mixed-Criticality and Real-Time Systems},
+  year={2025},
+  volume={33},
+  number={11},
+  pages={2907-2915},
+  keywords={Registers;Switches;Context;Real-time systems;Software;Microarchitecture;Microcontrollers;Hardware;Clocks;Stacking;Context switch;interrupt latency;mixed criticality;predictable computing;real-time systems;RISC-V},
+  doi={10.1109/TVLSI.2025.3612433}}
+@inproceedings{riscv-sail,
+  author = {Alasdair Armstrong and Thomas Bauereiss and Brian Campbell and Alastair Reid and Kathryn E. Gray and Robert M. Norton and Prashanth Mundkur and Mark Wassell and Jon French and Christopher Pulte and Shaked Flur and Ian Stark and Neel Krishnaswami and Peter Sewell},
+  title = {{ISA} Semantics for {ARMv8-A, RISC-V, and CHERI-MIPS}},
+  optcrossref = {},
+  optkey = {},
+  conf = {POPL 2019},
+  booktitle = {Proceedings of the 46th ACM SIGPLAN Symposium on Principles of Programming Languages},
+  optbooktitle = {},
+  year = {2019},
+  opteditor = {},
+  optvolume = {},
+  optnumber = {},
+  optseries = {},
+  optpages = {},
+  month = jan,
+  optaddress = {},
+  optorganization = {},
+  optpublisher = {},
+  note = {Proc. ACM Program. Lang. 3, POPL, Article 71},
+  optnote = {},
+  optannote = {},
+  doi = {10.1145/3290384},
+  abstract = {Architecture specifications notionally define the fundamental interface between hardware and software: the envelope of allowed behaviour for processor implementations, and the basic assumptions for software development and verification.  But in practice, they are typically prose and pseudocode documents, not rigorous or executable artifacts, leaving software and verification on shaky ground.
+
+In this paper, we present rigorous semantic models for the sequential behaviour of large parts of the mainstream ARMv8-A, RISC-V, and MIPS architectures, and the research CHERI-MIPS architecture, that are complete enough to boot operating systems, variously Linux, FreeBSD, or seL4.  Our ARMv8-A models are automatically translated from authoritative ARM-internal definitions, and (in one variant) tested against the ARM Architecture Validation Suite.
+
+We do this using a custom language for ISA semantics, Sail, with a lightweight dependent type system, that supports automatic generation of emulator code in C and OCaml, and automatic generation of proof-assistant definitions for Isabelle, HOL4, and (currently only for MIPS) Coq.  We use the former for validation, and to assess specification coverage.  To demonstrate the usability of the latter, we prove (in Isabelle) correctness of a purely functional characterisation of ARMv8-A address translation.  We moreover integrate the RISC-V model into the RMEM tool for (user-mode) relaxed-memory concurrency exploration.  We prove (on paper) the soundness of the core Sail type system.
+
+We thereby take a big step towards making the architectural abstraction actually well-defined, establishing foundations for verification and reasoning.
+},
+  apollourl = {https://www.repository.cam.ac.uk/handle/1810/288588},
+  pdf = {http://www.cl.cam.ac.uk/users/pes20/sail/sail-popl2019.pdf},
+  supplementarymaterial = {http://www.cl.cam.ac.uk/users/pes20/sail/popl2019.html},
+  topic = {ISA_semantics},
+  topictwo = {cheri},
+  cheriformal = {true},
+  project = {http://www.cl.cam.ac.uk/~pes20/sail/},
+  elver = {true},
+  optrecent = {true}
+}@conference{biodevices22,
+author={Guillaume Bour. and Marie Elisabeth Gaup Moe. and Ravishankar Borgaonkar.},
+title={Experimental Security Analysis of Connected Pacemakers},
+booktitle={Proceedings of the 15th International Joint Conference on Biomedical Engineering Systems and Technologies - BIODEVICES,},
+year={2022},
+pages={35-45},
+publisher={SciTePress},
+organization={INSTICC},
+doi={10.5220/0010816900003123},
+isbn={978-989-758-552-4},
+issn={2184-4305},
+}
+
+@article{CHAUVIN202351,
+title = {Pacemakers and implantable cardiac defibrillators: Must we fear hackers? Cybersecurity of implantable electronic devices},
+journal = {Archives of Cardiovascular Diseases},
+volume = {116},
+number = {2},
+pages = {51-53},
+year = {2023},
+issn = {1875-2136},
+doi = {https://doi.org/10.1016/j.acvd.2022.12.002},
+url = {https://www.sciencedirect.com/science/article/pii/S1875213623000062},
+author = {Michel Chauvin and Olivier Piot and Serge Boveda and Laurent Fauchier and Pascal Defaye},
+keywords = {Pacemaker, Defibrillator, Cybersecurity}
+}
+
+@phdthesis{Lindner1292333,
+   author = {Lindner, Marcus},
+   institution = {Luleå University of Technology, Computer Science},
+   school = {Luleå University of Technology, Computer Science},
+   title = {!secure(system) $<==>$ !safe(system) : On Security and Safety of Industrial Software Systems},
+   series = {Doctoral thesis / Luleå University of Technology 1 jan 1997 → …},
+   ISSN = {1402-1544},
+   keywords = {embedded systems, hard real-time, concurrency, model of computation, safety-critical, safety, security, industrial automation, RTFM, real-time for the masses},
+   abstract = {The focus of our research work is on readily accessible, embedded, real-time development with concurrency support. To this end, we develop the Real-Time For the Masses (RTFM) programming framework with a model of computation based on tasks and resources and that stipulates a timing semantics. Typically, hard real-time requirements are a characteristic of safety-critical applications. In contrast to runtime verification, such applications primarily require static assurances concerning safety and security attributes. This thesis discusses the building blocks for a statically analyzable programming paradigm for embedded real-time applications and its implementation. Svenska kraftnät funded the research presented in this thesis and set the scope to industrial automation. Consequently, we also investigate the applicability of our RTFM framework for scheduling and resource management for the runtime environments of industrial applications. We start by reviewing relevant and well-established industry standards to build background knowledge of the state-of-the-art safety and security requirements in software development. Special attention is placed on the IEC 61131 and IEC 61499 standards for industrial software development and their programming and execution model. We show the feasibility of using IEC 61499 as a holistic, distributed, and hierarchical model with mappings from the functional layer (IEC 61499 function block networks) and safety layer (PLCopen safety function blocks) to RTFM. We also demonstrate that our Rust-based RTFM implementation enables static verification for a myriad of safety and security attributes. Moreover, our investigations reveal a mutual dependency of safety and security in the context of software systems. For this reason, we believe and argue that safety and security cannot be considered independent during the design and implementation of safety-critical applications. Upon closer examination, we even conclude that safety and security are equivalent.   },
+   ISBN = {978-91-7790-320-8},
+   ISBN = {978-91-7790-321-5},
+   year = {2019}
+}
+
+@article{Baker1990ASR,
+  title={A stack-based resource allocation policy for realtime processes},
+  author={Theodore P. Baker},
+  journal={[1990] Proceedings 11th Real-Time Systems Symposium},
+  year={1990},
+  pages={191-200}
+}
+
+
+@article{boolector,
+  author    = {Aina Niemetz and
+               Mathias Preiner and
+               Armin Biere},
+  title     = {Boolector 2.0},
+  journal   = {J. Satisf. Boolean Model. Comput.},
+  volume    = {9},
+  number    = {1},
+  pages     = {53--58},
+  year      = {2014},
+  url       = {https://doi.org/10.3233/sat190101},
+  doi       = {10.3233/sat190101},
+  biburl    = {https://dblp.org/rec/journals/jsat/NiemetzPB14.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+@misc{arm,
+    title = {The Economics of a Trillion Connected Devices},
+    url = {https://community.arm.com/arm-community-blogs/b/internet-of-things-blog/posts/white-paper-the-route-to-a-trillion-devices},
+    author = {Arm Softbank},
+    year = {2017},
+}
+
+@misc{verifiedmarketresearch,
+    title = {Smart Healthcare Products},
+    url = {https://www.verifiedmarketresearch.com/product/smart-healthcare-products-mark},
+    author = {Verified Market Research},
+    year = {2023},
+}
+
+@misc{sel4,
+    title = {{seL4 - If I run seL4, is my system secure?}},
+    url = {https://docs.sel4.systems/projects/sel4/frequently-asked-questions.html},
+    author = {Sel4 Systems},
+    year = {2023},
+}
+
+@misc{rust-code-of-conduct,
+    title = {Rust - Code of Conduct},
+    url = {https://www.rust-lang.org/policies/code-of-conduct},
+    author = {Rust Team},
+    year = {2023},
+}
+
+@misc{rtic-git,
+    title = {GitHub Organization for the RTIC scheduler and ecosystem},
+    url = {https://github.com/rtic-rs/},
+    author = {{RTIC Team}},
+    year = {2024},
+}
+
+@misc{rtic-matrix,
+    title = {RTIC Matrix Forum},
+    url = {https://matrix.to/#/#rtic:matrix.org},
+    author = {RTIC Team},
+    year = {2023},
+}
+
+@misc{rtic-rs,
+    title = {{The RTIC Book}},
+    url = {https://rtic.rs/2/book/en/},
+    author = {{RTIC Team}},
+    year = {2024},
+}
+
+@misc{hippomenes-git,
+    title = {{Hippomenes}},
+    url = {https://github.com/perlindgren/hippomenes},
+    author = {Per Lindgren and Pawel Dzialo},
+    year = {2024},
+}
+@inproceedings{kim_flipping_2014,
+	location = {Minneapolis, {MN}, {USA}},
+	title = {Flipping bits in memory without accessing them: An experimental study of {DRAM} disturbance errors},
+	isbn = {978-1-4799-4394-4 978-1-4799-4396-8},
+	url = {http://ieeexplore.ieee.org/document/6853210/},
+	doi = {10.1109/ISCA.2014.6853210},
+	shorttitle = {Flipping bits in memory without accessing them},
+	abstract = {Memory isolation is a key property of a reliable and secure computing system — an access to one memory address should not have unintended side eﬀects on data stored in other addresses. However, as {DRAM} process technology scales down to smaller dimensions, it becomes more diﬃcult to prevent {DRAM} cells from electrically interacting with each other. In this paper, we expose the vulnerability of commodity {DRAM} chips to disturbance errors. By reading from the same address in {DRAM}, we show that it is possible to corrupt data in nearby addresses. More speciﬁcally, activating the same row in {DRAM} corrupts data in nearby rows. We demonstrate this phenomenon on Intel and {AMD} systems using a malicious program that generates many {DRAM} accesses. We induce errors in most {DRAM} modules (110 out of 129) from three major {DRAM} manufacturers. From this we conclude that many deployed systems are likely to be at risk. We identify the root cause of disturbance errors as the repeated toggling of a {DRAM} row’s wordline, which stresses inter-cell coupling eﬀects that accelerate charge leakage from nearby rows. We provide an extensive characterization study of disturbance errors and their behavior using an {FPGA}-based testing platform. Among our key ﬁndings, we show that (i) it takes as few as 139K accesses to induce an error and (ii) up to one in every 1.7K cells is susceptible to errors. After examining various potential ways of addressing the problem, we propose a low-overhead solution to prevent the errors.},
+	eventtitle = {2014 {ACM}/{IEEE} 41st International Symposium on Computer Architecture ({ISCA})},
+	pages = {361--372},
+	booktitle = {2014 {ACM}/{IEEE} 41st International Symposium on Computer Architecture ({ISCA})},
+	publisher = {{IEEE}},
+	author = {Kim, Yoongu and Daly, Ross and Kim, Jeremie and Fallin, Chris and Lee, Ji Hye and Lee, Donghyuk and Wilkerson, Chris and Lai, Konrad and Mutlu, Onur},
+	urldate = {2025-05-08},
+	date = {2014-06},
+	langid = {english},
+	file = {PDF:/home/mamu/.zotero-data/storage/DYVV4T9U/Kim et al. - 2014 - Flipping bits in memory without accessing them An experimental study of DRAM disturbance errors.pdf:application/pdf},
+}
+@INPROCEEDINGS{srp,
+  author={Baker, T.P.},
+  booktitle={[1990] Proceedings 11th Real-Time Systems Symposium},
+  title={A stack-based resource allocation policy for realtime processes},
+  year={1990},
+  volume={},
+  number={},
+  pages={191-200},
+  keywords={Resource management;Runtime;Dynamic scheduling;Timing;Predictive models;Testing;Processor scheduling;Computer science;Protocols;Switches},
+  doi={10.1109/REAL.1990.128747}}
+
+@inproceedings{rtfm,
+   author = {Eriksson, Johan and H{\"a}ggstr{\"o}m, Fredrik and Aittamaa, Simon and Kruglyak, Andrey and Lindgren, Per},
+   booktitle = {2013 8th IEEE International Symposium on Industrial and Embedded Systems (SIES 2013) : 19-21 June 2013, Porto, Portugal},
+   institution = {Luleå University of Technology, Embedded Internet Systems Lab},
+   pages = {110--113},
+   title = {{Real-time for the masses, step 1: Programming API and static priority SRP kernel primitives}},
+   DOI = {10.1109/SIES.2013.6601482},
+   abstract = {Lightweight Real-Time Operating Systems have gained widespread use in implementing embedded software on lightweight nodes. However, bare metal solutions are chosen, e.g., when the reactive (interrupt-driven) paradigm better matches the programmer’s intent, when the OS features are not needed, or when the OS overhead is deemed too large. Moreover, other approaches are used when real-time guarantees are required. Establishing real-time and resource guarantees typically requires expert knowledge in the field, as no turn-key solutions are available to the masses.In this paper we set out to bridge the gap between bare metal solutions and traditional Real-Time OS paradigms. Our goal is to meet the intuition of the programmer and at the same time provide a resource-efficient (w.r.t. CPU and memory) implementation with established properties, such as bounded memory usage and guaranteed response times. We outline a roadmap for Real-Time For the Masses (RTFM) and report on the first step: an intuitive, platform-independent programming API backed by an efficient Stack Resource Policy-based scheduler and a tool for kernel configuration and basic resource and timing analysis. },
+   year = {2013}
+}
+
+@INPROCEEDINGS{6602108,
+  author={Burns, A. and Wellings, A.J.},
+  booktitle={2013 25th Euromicro Conference on Real-Time Systems},
+  title={A Schedulability Compatible Multiprocessor Resource Sharing Protocol -- MrsP},
+  year={2013},
+  volume={},
+  number={},
+  pages={282-291},
+  doi={10.1109/ECRTS.2013.37}}
+
+
+
+@INPROCEEDINGS{990598,
+  author={Gai, P. and Lipari, G. and Di Natale, M.},
+  booktitle={Proceedings 22nd IEEE Real-Time Systems Symposium (RTSS 2001) (Cat. No.01PR1420)},
+  title={Minimizing memory utilization of real-time task sets in single and multi-processor systems-on-a-chip},
+  year={2001},
+  volume={},
+  number={},
+  pages={73-83},
+  doi={10.1109/REAL.2001.990598}}
+
+
+@mastersthesis{AparicioRivera1391552,
+   author = {Aparicio Rivera, Jorge},
+   institution = {Luleå University of Technology, Computer Science},
+   pages = {114},
+   school = {Luleå University of Technology, Computer Science},
+   title = {Real time Rust on multi-core microcontrollers},
+   keywords = {Rust, real-time, memory safety, embedded, static analysis, stack resource policy, stack analysis, arm, cortex-m},
+   abstract = {Today the majority of embedded software is written in C or C++ using the thread paradigm. C and C++ are memory unsafe programming languages that often appear in CVE (Common Vulnerability and Exploits) reports. Threads are a popular concurrency paradigm in SMP (Symmetric Multi Processor) systems; however, threads can deadlock and are hard to statically analyze for schedulability. At the same time, security is becoming more and more important thanks to the exponential grow of IoT (Internet of Things) devices; meanwhile, vendors are starting to ship more and more heterogeneous multi-core devices where the thread paradigm can not be applied. In this thesis, we present an alternative programming framework for building real time, safety critical and general purpose embedded software that is memory safe by construction and suitable for single-core, homogeneous multi-core and heterogeneous multi-core systems. },
+   year = {2020}
+}
+
+@ARTICLE{48943,
+  author={Xu, J. and Parnas, D.L.},
+  journal={IEEE Transactions on Software Engineering},
+  title={Scheduling processes with release times, deadlines, precedence and exclusion relations},
+  year={1990},
+  volume={16},
+  number={3},
+  pages={360-369},
+  doi={10.1109/32.48943}}
+
+
+@misc{riscv-org,
+    title = {{RISC-V}},
+    url = {https://riscv.org/technical/specifications/},
+    author = {RISC-V ORG},
+    year = {2023},
+}
+
+@misc{v6m,
+    title = {{Armv6-M Architecture Reference Manual}},
+    url = {https://developer.arm.com/documentation/ddi0419/e/},
+    author = {ARM},
+    year = {2023},
+}
+
+@misc{v7m,
+    title = {{Armv7-M Architecture Reference Manual}},
+    url = {https://developer.arm.com/documentation/ddi0403/ee/},
+    author = {ARM},
+    year = {2023},
+}
+
+@misc{v8m,
+    title = {{Armv8-M Architecture Reference Manual}},
+    url = {https://developer.arm.com/documentation/ddi0553},
+    author = {ARM},
+    year = {2023},
+}
+
+@misc{riscv-vol1,
+    title = {{The RISC-V Instruction Set Manual Volume I: Unprivileged ISA}},
+    month = {5},
+    year = {2025},
+    url = {https://github.com/riscv/riscv-isa-manual/releases/download/riscv-isa-release-3d0d7a4-2025-06-19/riscv-unprivileged.pdf},
+    note = {Accessed 20.6.2025},
+}
+
+@misc{riscv-privileged-specification,
+    title = {{The RISC-V Instruction Set Manual, Volume II: Privileged Architecture}},
+    month = {12},
+    year = {2025},
+    url = {https://drive.google.com/file/d/17GeetSnT5wW3xNuAHI95-SI1gPGd5sJ_/view?usp=sharing},
+    note = {Accessed 12.8.2025},
+}
+
+@misc{riscv-clic-specification,
+    title = {{Core-Local Interrupt Controller (CLIC) RISC-V Privileged Architecture Extensions}},
+    url = {https://github.com/riscv/riscv-fast-interrupt/blob/master/clic.adoc},
+    note = {Accessed 11.3.2023},
+}
+
+@article{Lindner1256722,
+   author = {Lindner, Marcus and Aparicio, Jorge and Lindgren, Per},
+   institution = {Luleå University of Technology, Computer Science},
+   journal = {Ada User Journal},
+   note = {Validerad;2019;Niv{\aa} 1;2019-04-09 (inah)},
+   number = {1},
+   publisher = {Ada Language UK Ltd.},
+   title = {{Concurrent Reactive Objects in Rust Secure by Construction}},
+   volume = {40},
+   abstract = {Embedded systems of the IoT era face the software developer with requirements on a mix of resource efficiency, real-time, safety, and security properties. As of today, C/C++ programming dominates the mainstream of embedded development, which leaves ensuring system wide properties mainly at the hands of the programmer. We adopt a programming model and accompanying framework implementation that leverages on the memory model, type system, and zero-cost abstractions of the Rust language. Based on the outset of reactivity, a software developer models a system in terms of Concurrent Reactive Objects (CROs) hierarchically grouped into Concurrent Reactive Components (CRCs) with communication captured in terms of time constrained synchronous and asynchronous messages. The developer declaratively defines the system, from which a static system instance can be derived and analyzed. A system designed in the proposed CRC framework has the outstanding properties of efficient, memory safe, race-, and deadlock-free preemptive (single-core) execution with predictable real-time properties. In this paper, we further explore the Rust memory model and the CRC framework towards systems being secure by construction. In particular, we show that permissions granted can be freely delegated without any risk of leakage outside the intended set of components. Moreover, the model guarantees permissions to be authentic, i.e., neither manipulated nor faked. Finally, the model guarantees permissions to be temporal, i.e., never to outlive the granted authority. We believe and argue that these properties offer the fundamental primitives for building secure by construction applications and demonstrate its feasibility on a small case study, a wireless autonomous system based on an ARM Cortex M3 target. },
+   year = {2019}
+}
+
+@misc{aurix,
+    title = {{Automotive Safety and Cybersecurity: Infineon's AURIX™ TC3xx, TC4x, TRAVEO™ T2G \& PSoC families of microcontrollers support Rust}},
+    url = {https://www.infineon.com/cms/en/about-infineon/press/market-news/2023/INFATV202303-076.html},
+    author = {Infineon},
+    year = {2023},
+}
+
+@misc{volvo,
+    title = {{Why Rust is actually good for your car}},
+    url = {https://medium.com/volvo-cars-engineering/why-volvo-thinks-you-should-have-rust-in-your-car-4320bd639e09},
+    author = {Volvo},
+    year = {2023},
+}
+
+@misc{esp32c3,
+    title = {{ESP32C3 Technical Reference Manual}},
+    url = {https://www.espressif.com/sites/default/files/documentation/esp32-c3_technical_reference_manual_en.pdf},
+    author = {Espressif},
+    year = {2023},
+}
+
+@misc{tc3xx,
+    title = {{AURIX™ TC3xx}},
+    url = {https://www.infineon.com/dgdl/Infineon-AURIX_TC3xx_Part1-UserManual-v02_00-EN.pdf?fileId=5546d462712ef9b701717d3605221d96},
+    author = {Infineon},
+    year = {2023},
+}
+
+@inproceedings{inproceedings,
+author = {S., Krishnakanth and K., Vijaya},
+year = {2015},
+month = {03},
+pages = {1-6},
+title = {Design of sloth real time kernel on a hybrid system},
+doi = {10.1109/ICIIECS.2015.7193042}
+}
+
+@INPROCEEDINGS{6925989,
+  author={Danner, Daniel and MÃ¼ller, Rainer and SchrÃ¶der-Preikschat, Wolfgang and Hofer, Wanja and Lohmann, Daniel},
+  booktitle={2014 IEEE 19th Real-Time and Embedded Technology and Applications Symposium (RTAS)},
+  title={SAFER SLOTH: Efficient, hardware-tailored memory protection},
+  year={2014},
+  volume={},
+  number={},
+  pages={37-48},
+  abstract={The goal of the SLOTH family of operating system kernels is to provide a unified priority space to the real-time applications. By automated mapping of tasks to interrupts, we eliminate rate-monotonic priority inversion anda increase execution determinism. In its standard implementation, however, SLOTH has been criticized for being unsafe, since interrupt service routines are executed in supervisor mode. SAFER SLOTH mitigates this shortcoming-while keeping the favorable properties of SLOTH-and provides a safe and isolated execution environment for application tasks. Adopting the SLOTH philosophy of embracing and exploiting hardware particularities, its generative approach automatically tailors the system to both the application and the target architecture. We achieve efficient MPU-based memory protection at reduced latency and low performance overhead by leveraging code inlining and compiler optimizations. In comparison to a commercial AUTOSAR OS, SAFER SLOTH achieves speedups between 8x (worst case) and 23x (best case) on kernel latencies while retaining the SLOTH advantages of strict priority obedience, excellent determinism and small memory footprints.},
+  keywords={},
+  doi={10.1109/RTAS.2014.6925989},
+  ISSN={1545-3421},
+  month={April},}
+
+ @article{Hofer2009SlothTA,
+  title={{Sloth: Threads as Interrupts}},
+  author={Wanja Hofer and Daniel Lohmann and Fabian Scheler and Wolfgang Schr{\"o}der-Preikschat},
+  journal={2009 30th IEEE Real-Time Systems Symposium},
+  year={2009},
+  pages={204-213}
+}
+
+@article{Hofer2011SleepyST,
+  title={{Sleepy Sloth: Threads as Interrupts as Threads}},
+  author={Wanja Hofer and Daniel Lohmann and Wolfgang Schr{\"o}der-Preikschat},
+  journal={2011 IEEE 32nd Real-Time Systems Symposium},
+  year={2011},
+  pages={67-77}
+}
+
+@misc{nsa,
+ title = {{Software Memory Safety}},
+    url = {https://media.defense.gov/2022/Nov/10/2003112742/-1/-1/0/CSI_SOFTWARE_MEMORY_SAFETY.PDF},
+    author = {{NSA - National Security Agency}},
+    year = {2023},
+}
+
+@article{10.1145/3308755.3308761,
+author = {Li, Wenhao and Xia, Yubin and Chen, Haibo},
+title = {Research on ARM TrustZone},
+year = {2019},
+issue_date = {September 2018},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {22},
+number = {3},
+issn = {2375-0529},
+url = {https://doi.org/10.1145/3308755.3308761},
+doi = {10.1145/3308755.3308761},
+abstract = {ARM TrustZone [1] is a hardware-based security feature that can provide software with a high-privilege and isolated execution environment. Such isolation is ensured by hardware, which is usually considered as more trustworthy than software. Thus the execution environment is also known as trusted execution environment (TEE). TrustZone technology was proposed in 2002, but did not get widely used until 2009, when Apple released iPhone 5s. In iPhone 5s, Apple leveraged TrustZone to protect its Touch ID, which ensures that even if the iOS is fully compromised, the user's fingerprint data can still be safe. In 2017, Google made TEE a mandatory requirement on any Android devices with a fingerprint scanner. Nowadays, almost all mobile phones and tablets have TEE deployed. Meanwhile, ARM integrates TrustZone in ARM64 and ARMv8-M to support a broader range of platforms including servers and IoT devices.},
+journal = {GetMobile: Mobile Comp. and Comm.},
+month = {jan},
+pages = {17–22},
+numpages = {6}
+}
+
+
+@misc{trustzone-m,
+ title = {{TrustZone for Cortex-M}},
+    url = {https://www.arm.com/technologies/trustzone-for-cortex-m}},
+    year = {2023},
+}
+
+@misc{trustzone-a,
+ title = {{TrustZone for Cortex-A}},
+    url = {https://www.arm.com/technologies/trustzone-for-cortex-a}},
+    year = {2023},
+}
+
+@article{10.1093/cybsec/tyab025,
+    author = {Hadan, Hilda and Serrano, Nicolas and Camp, L Jean},
+    title = "{A holistic analysis of web-based public key infrastructure failures: comparing experts' perceptions and real-world incidents}",
+    journal = {Journal of Cybersecurity},
+    volume = {7},
+    number = {1},
+    pages = {tyab025},
+    year = {2021},
+    month = {12},
+    abstract = "{Public key infrastructure (PKI) is the foundation of secure and trusted transactions across the Internet. This paper presents an evaluation of web-based PKI incidents in two parts. We began with a qualitative study where we captured security and policy experts' perceptions of PKI in a set of interviews. We interviewed 18 experts in two conferences who include security academics and practitioners. We describe their perceptions of PKI failures. To evaluate whether perceived failures match real documented failures, we conducted a quantitative analysis of real-world PKI incidents on the web since 2001. Our data comprise reports from Bugzilla, root program operators, academic literature, security blogs, and the popular press. We determined the underlying causes of each and reported the results. We identified a gap between experts' perceptions and real-world PKI incidents. We conclude that there are significant sources of failures of PKI that neither the usability nor traditional computer security community is engaging, nor can arguably engage separately. Specifically, we found incidents illustrate systematic weaknesses of organizational practices that create risks for all who rely upon PKI. More positively, our results also point to organizational and configuration choices that could avoid or mitigate some of these risks. Thus, we also identify immediate mitigation strategies (where feasible).}",
+    issn = {2057-2085},
+    doi = {10.1093/cybsec/tyab025},
+    url = {https://doi.org/10.1093/cybsec/tyab025},
+    eprint = {https://academic.oup.com/cybersecurity/article-pdf/7/1/tyab025/50476414/tyab025.pdf},
+}
+
+
+@INPROCEEDINGS{4658076,
+
+  author={Boogerd, Cathal and Moonen, Leon},
+
+  booktitle={2008 IEEE International Conference on Software Maintenance},
+
+  title={Assessing the value of coding standards: An empirical study},
+
+  year={2008},
+
+  volume={},
+
+  number={},
+
+  pages={277-286},
+
+  doi={10.1109/ICSM.2008.4658076}}
+
+@misc{MISRA,
+    title = {{MISRA}},
+    url = {https://misra.org.uk/}},
+    year = {2023},
+}
+
+@misc{cargo-call-stack,
+    title = {{cargo-call-stack}},
+    url = {https://github.com/japaric/cargo-call-stack},
+    author = {{Jorge Aparicio}},
+    year = {2023},
+}
+
+@misc{esp32c3-pmp,
+    title = {{esp32c3-pmp}},
+    url = {\url{https://github.com/onsdagens/esp32c3-pmp}},
+    author = {{Pawel Dzialo}},
+    year = {2023},
+}
+
+@misc{svd2rust,
+    title = {{svd2rust - Generate Rust register maps from SVD files}},
+    url = {https://github.com/rust-embedded/svd2rust},
+    author = {{Embedded Rust Tools Team}},
+    year = {2023},
+}
+
+@misc{chiptool,
+    title = {{chiptool - chiptool is an experimental fork of svd2rust}},
+    url = {https://github.com/embassy-rs/chiptool},
+    author = {{Dario Nieuwenhuis \& contributors}},
+    year = {2023},
+}
+
+@misc{stm32ral,
+    title = {{stm32ral - Rust RAL (register access layer) for all STM32 microcontrollers}},
+    url = {https://github.com/adamgreig/stm32ral},
+    author = {{Adam Greig \& contributors}},
+    year = {2023},
+}
+
+@misc{heapless,
+    title = {{heapless - Heapless, `static` friendly data structures in Rust}},
+    url = {https://github.com/japaric/heapless},
+    author = {{Jorge Aparicio \& contributors}},
+    year = {2023},
+}
+
+@misc{klee,
+    title = {{KLEE - A Dynamic Symbolic Execution Engine}},
+    url = {http://klee.github.io/},
+    author = {{Cristian Cadar, Daniel Dunbar, Dawson Engler \& contributors}},
+    year = {2023},
+}
+
+@misc{Norlen1688170,
+   title = {{Architecture for a Symbolic Execution Environment}},
+   url = {http://ltu.diva-portal.org/smash/get/diva2:1688170/FULLTEXT01.pdf},
+   author = {Norlen, Joacim},
+   year = {2022}
+}
+
+@INPROCEEDINGS{8471992,
+
+  author={Lindner, Marcus and Aparicius, Jorge and Lindgren, Per},
+
+  booktitle={2018 IEEE 16th International Conference on Industrial Informatics (INDIN)},
+
+  title={No Panic! Verification of Rust Programs by Symbolic Execution},
+
+  year={2018},
+
+  volume={},
+
+  number={},
+
+  pages={108-114},
+
+  doi={10.1109/INDIN.2018.8471992}}
+
+
+
+@misc{layout-derive,
+    title = {{layout-derive}},
+    url = {https://github.com/perlindgren/layout-trait},
+    author = {{Per Lindgren}},
+    year = {2023},
+}
+
+@misc{layout-trait,
+    title = {{layout-trait}},
+    url = {https://github.com/perlindgren/layout-trait},
+    author = {{Per Lindgren}},
+    year = {2023},
+}
+
+@misc{nclic-github,
+    title = {{SyncRim model of N-CLIC RISC-V and the SyncRim simulator}},
+    url = {https://github.com/perlindgren/syncrim/tree/hippomenes},
+    author = {{P. Lindgren, P. Dzialo}},
+    year = {2024},
+}
+
+@misc{synopsys,
+    title = {{OP-TEE OS analysis scan, 2021}},
+    url = {https://scan.coverity.com/projects/op-tee-optee_os},
+    author = {{Synopsys}},
+    year = {2023},
+}
+
+@misc{opt-tee,
+    title = {{OP-TEE OS Frequently Asked Questions}},
+    url = {https://optee.readthedocs.io/en/latest/faq/faq.html?highlight=size#q-what-is-the-size-of-op-tee-itself},
+    author = {{TrustedFirmware.org.}},
+    year = {2023},
+}
+
+@INPROCEEDINGS{10316219,
+
+  author={Hui, John and Edwards, Kyle J. and Edwards, Stephen A.},
+
+  booktitle={2023 21st ACM-IEEE International Symposium on Formal Methods and Models for System Design (MEMOCODE)},
+
+  title={{Timestamp Peripherals for Precise Real-Time Programming}},
+
+  year={2023},
+
+  volume={},
+
+  number={},
+
+  pages={137-147},
+
+  keywords={Runtime;Uncertainty;Microcontrollers;Programming;Real-time systems;Software;Hardware;real time systems;concurrency control;computer languages;timing},
+
+  doi={}}
+
+@INPROCEEDINGS{ENEST,
+
+  author={Lindgren, Per and Dzialo, Pawel and Lunnikivi, Henri, and Ericsson, Johan},
+
+  booktitle={2023 IEEE 2nd Industrial Electronics Society Annual On-Line Conference (ONCON)},
+
+  title={{ENEST - Efficient Interrupt Nesting for RISC-V based CPUs}},
+
+  year={2023},
+
+  volume={},
+
+  number={},
+
+  doi={10.1109/ONCON60463.2023.10431132}}
+
+
+  @misc{balas2023cv32rt,
+      title={{CV32RT: Enabling Fast Interrupt and Context Switching for RISC-V Microcontrollers}},
+      author={Robert Balas and Alessandro Ottaviano and Luca Benini},
+      year={2023},
+      eprint={2311.08320},
+      archivePrefix={arXiv},
+      primaryClass={cs.AR}
+}
+
+@inproceedings{c-ub,
+author = {Xu, Jianhao and Lu, Kangjie and Du, Zhengjie and Ding, Zhu and Li, Linke and Wu, Qiushi and Payer, Mathias and Mao, Bing},
+title = {Silent bugs matter: a study of compiler-introduced security bugs},
+year = {2023},
+isbn = {978-1-939133-37-3},
+publisher = {USENIX Association},
+address = {USA},
+abstract = {Compilers assure that any produced optimized code is semantically equivalent to the original code. However, even "correct" compilers may introduce security bugs as security properties go beyond translation correctness. Security bugs introduced by such correct compiler behaviors can be disputable; compiler developers expect users to strictly follow language specifications and understand all assumptions, while compiler users may incorrectly assume that their code is secure. Such bugs are hard to find and prevent, especially when it is unclear whether they should be fixed on the compiler or user side. Nevertheless, these bugs are real and can be severe, thus should be studied carefully.We perform a comprehensive study on compiler-introduced security bugs (CISB) and their root causes. We collect a large set of CISB in the wild by manually analyzing 4,827 potential bug reports of the most popular compilers (GCC and Clang), distilling them into a taxonomy of CISB. We further conduct a user study to understand how compiler users view compiler behaviors. Our study shows that compiler-introduced security bugs are common and may have serious security impacts. It is unrealistic to expect compiler users to understand and comply with compiler assumptions. For example, the "no-undefined-behavior" assumption has become a nightmare for users and a major cause of CISB.},
+booktitle = {Proceedings of the 32nd USENIX Conference on Security Symposium},
+articleno = {205},
+numpages = {18},
+location = {Anaheim, CA, USA},
+series = {SEC '23}
+}
+
+
+
+
+
+@inproceedings{syncrim,
+abstract = {Graphical simulation of synchronous circuits allows for visualizing control and data paths along with component states and is often advantageous in comparison to traditional RTL simulation waveform deciphering. Prominent use cases include detailed RTL simulation of CPUs and MCUs, system level simulation and hardware/software co-design. In this paper we report on the design and ongoing open source development of SyncRim, a modern graphical simulator for synchronous circuits implemented in the Rust language. We highlight key design features of SyncRim by implementing a simple RISC-V core along with Rust based toolchain for RISC-V code generation and code execution.},
+author = {Dzialo, Pawel and Boom, Erik Vd and Lindgren, Per},
+booktitle = {2023 IEEE Nordic Circuits and Systems Conference (NorCAS)},
+isbn = {9798350337570},
+keywords = {Ciphers ; Information visualization},
+language = {eng},
+pages = {1-6},
+publisher = {IEEE},
+title = {{SyncRim - A Modern Simulator for Synchronous Circuits Implemented in Rust}},
+year = {2023},
+}
+
+
+@INPROCEEDINGS{benini,
+  author={Balas, Robert and Benini, Luca},
+  booktitle={2021 Design, Automation \& Test in Europe Conference \& Exhibition (DATE)},
+  title={{RISC-V} for {Real-time} {MCUs} - {Software} {Optimization} and {Microarchitectural} {Gap} {Analysis}},
+  year={2021},
+  volume={},
+  number={},
+  pages={874-877},
+  doi={10.23919/DATE51398.2021.9474114}}
+
+
+  @misc{ibex-git,
+    title = {{Ibex RISC-V Core}},
+    url = { https://github.com/lowRISC/ibex},
+    author = {{lowRISC}},
+    year = {2024},
+}
+
+@misc{8051,
+    title = {{MCS 51 Microcontroller Family User's Manual}},
+    url = { http://web.mit.edu/6.115/www/document/8051.pdf},
+    author = {Intel},
+    year = {1994},
+}
+@misc{SPARC,
+    title = {{The SPARC Architecture Manual, version 9}},
+    url = { https://www.cs.utexas.edu/users/novak/sparcv9.pdf},
+    author = {SPARC International},
+    year = {2000},
+}
+
+@INPROCEEDINGS{hw-srp,
+
+  author={Per Lindgren and Pawel Dzialo and Henri Lunnikivi},
+
+  booktitle={2023 IEEE 32nd International Symposium on Industrial Electronics (ISIE)},
+
+  title={{Hardware support for Static-Priority Stack Resource Policy based scheduling}},
+
+  year={2023},
+
+  volume={},
+
+  number={},
+
+  doi={10.1109/ISIE51358.2023.10228088}}
+
+
+
+@misc{ChipChronicles_vol1,
+    title = {{Chip Chronicles Vol 1}},
+    url = {https://allpros.eu/sites/default/files/2023-10/ChipChronicles_Vol1.pdf},
+    author = {{ALLPROS.eu reports}},
+    year = {2023},
+}
+@misc{sparc-windowing,
+    title = {{Understanding stacks and registers in the Sparc architecture(s)}},
+    url = {https://cseweb.ucsd.edu/~gbournou/CSE131/sparcstack.html},
+    author = {{P. Magnusson}},
+    note = {{University of California San Diego}},
+    year = {1997},
+}
+
+@misc{cortex-m-rtic,
+    title = {{A concurrency framework for building real-time systems}},
+    url = {https://crates.io/crates/cortex-m-rtic},
+    author = {{RTIC Team}},
+    year = {2023},
+}
+
+
+
+@misc{cisa,
+    title = {{The Case for Memory Safe Roadmaps}},
+    url = {https://www.cisa.gov/sites/default/files/2023-12/The-Case-for-Memory-Safe-Roadmaps-508c.pdf},
+    author = {{United States Cybersecurity and Infrastructure Security Agency}},
+    year = {2023},
+}
+
+
+@misc{eabi,
+    title = {{Proposal for a RISC-V Embedded ABI (EABI)}},
+    url = {https://github.com/riscv-non-isa/riscv-eabi-spec/blob/master/EABI.adoc},
+    note = {Accessed 15.11.2023},
+}
+
+@article{GaitanVasileGheorghita2015CABo,
+abstract = {Task switching, synchronization, and communication between processes are major problems for each real-time operating system. Software implementation of the specific mechanisms may lead to significant delays that can affect deadline requirements for some applications. This paper presents a hardware scheduler architecture integrated into the CPU structure that uses resource remapping techniques for the pipeline registers and for the CPU working registers. We present an original implementation of the hardware structure used for static and dynamic scheduling of the task, unitary management of events, access to architecture shared resources, event generation, and a method used for assigning interrupts to tasks that insures an efficient operation in the context of real-time control. One assembler instruction is used for simultaneous task synchronization with multiple event sources. This architecture allows a task switching time of one clock cycle (with a worst case scenario of three clock cycles for special instructions used for external memory accesses) and a response time of only 1.5 clock cycles for the events. Some mechanisms for improving program execution speed are also taken in consideration.},
+author = {Gaitan, Vasile Gheorghita and Gaitan, Nicoleta Cristina and Ungurean, Ioan},
+issn = {1063-8210},
+journal = {{IEEE transactions on very large scale integration (VLSI) systems}},
+keywords = {Pipelines ; Computer architecture ; Hardware ; Registers ; Synchronization},
+language = {eng},
+number = {9},
+pages = {1661-1674},
+publisher = {IEEE},
+title = {{CPU Architecture Based on a Hardware Scheduler and Independent Pipeline Registers}},
+volume = {23},
+year = {2015},
+}
+
+@misc{riscv-ii,
+    key = "",
+    author = {Waterman, Andrew and Asanovic, Krste and Hauser, John and {RISC-V International}},
+    title =  {{The RISC-V Instruction Set Manual, Volume II: Privileged Architecture}},
+    year = 2021
+}
+
+@misc{riscv-i,
+    key = "",
+    author = {Waterman, Andrew and Asanovic, Krste and Hauser, John and {RISC-V International}},
+    title =  {{The RISC-V Instruction Set Manual, Volume I: Unprivileged Architecture}},
+    year = 2019
+}
+
+@misc{CLIC,
+ key = "",
+ author = {{RISC-V International}},
+ title = {{Core-Local Interrupt Controller (CLIC) RISC-V Privileged Architecture Extensions}},
+ howpublished = {\url{https://github.com/riscv/riscv-fast-interrupt/releases/download/v0.10/clic.pdf}},
+ year = 2025
+}
+
+@misc{renesas,
+ key = "",
+ author = {{Renesas Electronics Corporation}},
+ title = {{M32C/80 Group Datasheet}},
+ howpublished = {\texttt{https://www.renesas.com/us/en/\\document/dst/m32c80-group-datasheet?r=1053336}},
+ year = 2024
+}
+
+
+@article{tcrest,
+abstract = {Real-time systems need time-predictable platforms to allow static analysis of the worst-case execution time (WCET). Standard multi-core processors are optimized for the average case and are hardly analyzable. Within the T-CREST project we propose novel solutions for time-predictable multi-core architectures that are optimized for the WCET instead of the average-case execution time. The resulting time-predictable resources (processors, interconnect, memory arbiter, and memory controller) and tools (compiler, WCET analysis) are designed to ease WCET analysis and to optimize WCET performance. Compared to other processors the WCET performance is outstanding.
+The T-CREST platform is evaluated with two industrial use cases. An application from the avionic domain demonstrates that tasks executing on different cores do not interfere with respect to their WCET. A signal processing application from the railway domain shows that the WCET can be reduced for computation-intensive tasks when distributing the tasks on several cores and using the network-on-chip for communication. With three cores the WCET is improved by a factor of 1.8 and with 15 cores by a factor of 5.7.
+The T-CREST project is the result of a collaborative research and development project executed by eight partners from academia and industry. The European Commission funded T-CREST.},
+author = {Schoeberl, Martin and Abbaspour, Sahar and Akesson, Benny and Audsley, Neil and Capasso, Raffaele and Garside, Jamie and Goossens, Kees and Goossens, Sven and Hansen, Scott and Heckmann, Reinhold and Hepp, Stefan and Huber, Benedikt and Jordan, Alexander and Kasapaki, Evangelia and Knoop, Jens and Li, Yonghui and Prokesch, Daniel and Puffitsch, Wolfgang and Puschner, Peter and Rocha, André and Silva, Cláudio and Sparsø, Jens and Tocchi, Alessandro},
+address = {Amsterdam},
+copyright = {2015 Elsevier B.V.},
+issn = {1383-7621},
+journal = {Journal of systems architecture},
+keywords = {Integrated circuits ; Signal processing ; Realtime . . . ; Computer software ; Software engineering},
+language = {eng},
+number = {9},
+pages = {449-471},
+publisher = {Elsevier B.V},
+title = {{T-CREST: Time-predictable multi-core architecture for embedded systems}},
+volume = {61},
+year = {2015},
+}
+
+@ARTICLE{cv32rt,
+
+  author={Balas, Robert and Ottaviano, Alessandro and Benini, Luca},
+
+  journal={IEEE Transactions on Very Large Scale Integration (VLSI) Systems},
+
+  title={CV32RT: Enabling Fast Interrupt and Context Switching for RISC-V Microcontrollers},
+
+  year={2024},
+
+  volume={32},
+
+  number={6},
+
+  pages={1032-1044},
+
+  keywords={Task analysis;Real-time systems;Context;Registers;Time factors;Microcontrollers;Embedded systems;Context switching;embedded;interrupt latency;microcontroller unit (MCU);real-time;RISC-V},
+
+  doi={10.1109/TVLSI.2024.3377130}}
+
+@misc{freertos,
+    key = "",
+    author = {FreeRTOS},
+    title = {{Market leading RTOS for embedded systems with Internet of Things extensions}},
+    year = 2024,
+    howpublished = {\texttt{https://www.freertos.org/index.html}},
+    note = ""
+}
+
+@article{Patterson1982AVR,
+  title={{A VLSI RISC}},
+  author={David A. Patterson and Carlo H. S{\'e}quin},
+  journal={Computer},
+  year={1982},
+  volume={15},
+  pages={8-21},
+  url={https://api.semanticscholar.org/CorpusID:5389873}
+}
+
+@INPROCEEDINGS{layout,
+  author={Lindgren, Per and Dzialo, Pawel and Nurmi, Antti and Lunnikivi, Henri},
+  booktitle={2023 IEEE 2nd Industrial Electronics Society Annual On-Line Conference (ONCON)},
+  title={{Static and Dynamic Memory Protection using Type-Based Memory Layout in Rust}},
+  year={2023},
+  volume={},
+  number={},
+  doi={10.1109/ONCON60463.2023.10431237}
+}
+
+@INPROCEEDINGS{clic-ext,
+  author={Binjie Mao and Nianxiong Tan and Ting Chong and Lei Li},
+  booktitle={2021 6th International Conference on Integrated Circuits and Microsystems (ICICM)},
+  title={{A CLIC Extension Based Fast Interrupt System for Embedded RISC-V Processors}},
+  year={2021},
+  volume={},
+  number={},
+  doi={10.1109/ICICM54364.2021.9660345}
+}
+
+@misc{llvm.is.constant,
+    title = {{LLVM Language Reference: llvm.is.constant}},
+    note = {URL: \url{https://llvm.org/docs/LangRef.html\#llvm-is-constant-intrinsic}},
+    author = {{LLVM Project}},
+    year = {2024},
+}
+
+@misc{gcc_builtin_constant,
+    title = {{GCC, the GNU Compiler Collection: int \_\_builtin\_constant\_p}},
+    note = {URL: \url{https://gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html}},
+    author = {{GCC Team}},
+    year = {2024},
+}
+
+@misc{rust,
+ title = {{Rust - A language empowering everyone
+to build reliable and efficient software}},
+    note = {URL: \url{https://www.rust-lang.org/}},
+    author = {{Rust Team}},
+    year = {2024},
+}
+
+@misc{cmsis-svd,
+ title = {{CMSIS - Common Microcontroller Software Interface Standard}},
+    note = {URL: \url{https://arm-software.github.io/CMSIS\_6/latest/General/index.html}},
+    author = {{Arm}},
+    year = {2024},
+}
+
+@misc{rust-foundation,
+ title = {{Rust Foundation}},
+    note = {URL: \url{https://foundation.rust-lang.org/}},
+    author = {{Rust Foundation}},
+    year = {2024},
+}
+
+@misc{riscv-rt,
+ title = {\texttt{RISC-V RT}},
+    note = {URL: \url{https://github.com/rust-embedded/riscv-rt}},
+    author = {{Rust Tools Team}},
+    year = {2024},
+}
+
+@misc{riscv-crate,
+ title = {\texttt{RISC-V crate}},
+    note = {URL: \url{https://github.com/rust-embedded/riscv}},
+    author = {{Rust Tools Team}},
+    year = {2024},
+}
+
+@misc{semver,
+    title = {Semantic Versioning 2.0.0},
+    note = {URL: \url{https://semver.org/}},
+    author = {Tom Preston-Werner},
+    year = {2024},
+}
+
+
+@ARTICLE{10054520,
+
+  author={},
+
+  journal={IEEE Std 1685-2022 (Revision of IEEE Std 1685-2014)},
+
+  title={IEEE Standard for IP-XACT, Standard Structure for Packaging, Integrating, and Reusing IP within Tool Flows},
+
+  year={2023},
+
+  volume={},
+
+  number={},
+
+  pages={1-750},
+
+  keywords={IEEE Standards;Design automation;IP networks;abstraction definitions;address space specification;bus definitions;design environment;EDA;electronic design automation;electronic system level;ESL;IEEE 1685 implementation constraints;IP-XACT;register transfer level;RTL;SCRs;semantic consistency rules;TGI;tight generator interface;tool and data interoperability;use models;XML design metadata;XML schema},
+
+  doi={10.1109/IEEESTD.2023.10054520}}
+
+@inproceedings{bitwuzla,
+  author       = {Aina Niemetz and
+                  Mathias Preiner},
+  editor       = {Constantin Enea and
+                  Akash Lal},
+  title        = {Bitwuzla},
+  booktitle    = {Computer Aided Verification - 35th International Conference, {CAV}
+                  2023, Paris, France, July 17-22, 2023, Proceedings, Part {II}},
+  series       = {Lecture Notes in Computer Science},
+  volume       = {13965},
+  pages        = {3--17},
+  publisher    = {Springer},
+  year         = {2023},
+  url          = {https://doi.org/10.1007/978-3-031-37703-7\_1},
+  doi          = {10.1007/978-3-031-37703-7\_1},
+  timestamp    = {Fri, 21 Jul 2023 17:55:59 +0200},
+  biburl       = {https://dblp.org/rec/conf/cav/NiemetzP23.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}
+@INPROCEEDINGS{rtic5,
+  author={Madaoui, Zakaria and Lunnikivi, Henri and Dzialo, Pawel and Lindgren, Per},
+  booktitle={2024 IEEE Nordic Circuits and Systems Conference (NorCAS)},
+  title={Towards modularity of the Rust RTIC real-time scheduling framework},
+  year={2024},
+  volume={},
+  number={},
+  pages={1-7},
+  keywords={Concurrent computing;Circuits and systems;Scalability;System recovery;Syntactics;Data structures;Real-time systems;DSL},
+  doi={10.1109/NorCAS64408.2024.10752441}}
+
+ @mastersthesis{Österberg_2022, title={Calculation of WCET with symbolic execution}, url={https://urn.kb.se/resolve?urn=urn:nbn:se:ltu:diva-92596}, abstractNote={Calculating WCET for schedulability analysis of RTIC applications is today performed with a hybrid approach with both static analysis of code and hardware measurements. A fully static analysis tool would allow for a easier integration into a CI/CD pipeline without the actual hardware. This thesis attempts to compute WCET statically, using symbolic execution engine KLEE to generate all the possible paths of execution for a task and then analyses these paths to approximate the worst-case for each path which would yield a approximate WCET for the analysed program.To analyze a path in a program the low-level intermediary assembly language used by the LLVM optimization infrastructure (called LLVM IR) is compared to the finished assembly language to draw conclusions on how an LLVM IR instruction is processed into assembly. To be able to perform this mapping from LLVM IR to assembly, the symbolic execution engine KLEE has been extended to also log each LLVM IR instruction run in a path. These logs combined with a translation table is how the approximations are calculated.The resulting approximations correlate with the actual cycles when the analysed program is run on actual hardware, which indicates that tool could actually be used to approximate WCET. There are however no guarantees and the tool has not been tested for larger scale programs.}, author={\"Osterberg, Carl}, year={2022} }
+
+@InProceedings{atalanta,
+author="Nurmi, Antti
+and Lindgren, Per
+and Kalache, Abdesattar
+and Lunnikivi, Henri
+and H{\"a}m{\"a}l{\"a}inen, Timo D.",
+editor="Fey, Dietmar
+and Stabernack, Benno
+and Lankes, Stefan
+and Pacher, Mathias
+and Pionteck, Thilo",
+title={{Atalanta: Open-Source RISC-V Microcontroller for Rust-Based Hard Real-Time Systems}},
+booktitle="Architecture of Computing Systems",
+year="2024",
+publisher="Springer Nature Switzerland",
+address="Cham",
+pages="316--330",
+abstract="Real-time systems are a segment of embedded systems that have remained dominated by proprietary hardware architectures, despite the continuing growth of the open-source RISC-V instruction set architecture (ISA). The introduction of core-local interrupt controller (CLIC) extensions to the RISC-V architecture presents a promising opportunity to bridge the technological gap with ARM in low-latency interrupt handling. Regarding software, the real-time interrupt-driven concurrency (RTIC) framework enables ever lighter hard real-time systems with formal compile-time guarantees for memory safety, response time and overall schedulability.",
+isbn="978-3-031-66146-4"
+}
+@ARTICLE{ml-riscv-survey,
+	author = {Kalapothas, Stavros and Galetakis, Manolis and Flamis, Georgios and Plessas, Fotis and Kitsos, Paris},
+	title = {{A Survey on RISC-V-Based Machine Learning Ecosystem}},
+	year = {2023},
+	journal = {Information (Switzerland)},
+	volume = {14},
+	number = {2},
+	doi = {10.3390/info14020064},
+	url = {https://www.scopus.com/inward/record.uri?eid=2-s2.0-85148695869&doi=10.3390%2finfo14020064&partnerID=40&md5=245f49aac42336bc19b2026be3c44c30},
+	type = {Review},
+	publication_stage = {Final},
+	source = {Scopus},
+}
+
+@mastersthesis{rust-v-c,
+   author = {Rikte, Karl},
+   school = {Lunds Tekniska H\"ogskola},
+   title = {{Using Rust as a Complement to C for Embedded Systems Software Development}},
+   year = {2018},
+   issn = {1650-2884},
+   abstract = {
+    Rust aims to bring safety to low-level programming by using zero-cost ab-
+    stractions. These provide, among other things, guaranteed memory safety and
+    threading without data races.
+
+    Garbage collected languages have become popular to guarantee safety, but
+    in performance critical, memory limited or real time applications, it is not an
+    ideal solution. Rust is safe and still has manual memory management, with
+    strict rules.
+
+    This report presents a case study of using the Rust language and associated
+    tooling such as debuggers and IDEs in practise. The study was carried out by
+    porting 5000+ lines of an embedded Linux daemon to Rust.
+
+    Rust upholds the safety and zero-cost claims. Using Rust has been found
+    to aid in achieving an improved, shorter, more expressive architecture. The
+    learning curve is a bit steep, but productivity has been found to be high once
+    learned. Tooling support is mature, but IDEs are not yet full featured. },
+
+}
+
+@INPROCEEDINGS{samsung-hw-int,
+
+  author={Lee, Jimin and Park, Sangwoo and Huh, Junho and Jeong, Sanghyo and Kim, Inhwan and Kim, Jae Min},
+
+  booktitle={2024 Design, Automation \& Test in Europe Conference \& Exhibition (DATE)},
+
+  title={{I2SR: Immediate Interrupt Service Routine on RISC-V MCU to Control mmWave RF Transceivers}},
+
+  year={2024},
+
+  volume={},
+
+  number={},
+
+  pages={1-2},
+
+  keywords={Radio frequency;Millimeter wave technology;Switches;Control systems;Transceivers;Timing;Millimeter wave communication;RISC-V;MCU;ISR;Context switching;Interrupt latency;5G mmWave;FR2},
+
+  doi={10.23919/DATE58400.2024.10546854}}
+
+@misc{hippo-poster,
+    author={Lindgren, Per and Dzialo, Pawel and Nurmi, Antti},
+    title={{Hippomenes: An Experimental Implementation of the RISC-V RT Real-Time Extension}},
+    year={2024},
+    note={Presented at RISC-V Summit 2024}
+}
+
+@misc{esp32c3-disaster,
+    title = {esp32c3-rt-benchmarks},
+    note = {https://github.com/onsdagens/esp32c3-rt-benchmarks/},
+    author = {{P. Dzialo(onsdagens)}},
+    year = {2023},
+}
+
+@misc{riscv-abi,
+    title = {{RISC-V ABIs Specification, Document Version 1.0}},
+    note = {Editors Kito Cheng and Jessica Clarke, RISC-V International, November 2022},
+    date = {November, 2022}
+}
+
+@book{rust-book,
+  title     = "The Rust Programming Language, 2nd Edition",
+  author    = "Klabnik, Steve and Nichols, Carol",
+  year      = 2022,
+  publisher = "No Starch Press",
+}
+@techreport{cortex-m,
+     title = {{ARM® Cortex®-M for Beginners}},
+     author = {Yiu, Joseph},
+     institution = {Arm Limited},
+     year = {2016},
+     month = {09},
+}
+
+@misc{esp32c,
+    title = {{ESP SoCs}},
+    author = {Espressif Systems},
+    year = {2025},
+    note = {\url{https://www.espressif.com/en/products/socs}}
+}
+
+@INPROCEEDINGS{balas-riscv-analysis,
+
+  author={Balas, Robert and Benini, Luca},
+
+  booktitle={2021 Design, Automation \& Test in Europe Conference \& Exhibition (DATE)},
+
+  title={RISC-V for Real-time MCUs - Software Optimization and Microarchitectural Gap Analysis},
+
+  year={2021},
+
+  volume={},
+
+  number={},
+
+  pages={874-877},
+
+  abstract={Processors using the RISC-VISA are finding increasing real use in IoT and embedded systems in the MCU segment. However, many real-life use cases in this segment have realtime constraints. In this paper we analyze the current state of real-time support for RISC-V with respect to the ISA, available hardware and softwari stack focusing on the RV32IMC subset of the ISA. As a reference point, we use the CV32E40P, an open-source industrially supported RV32IMFC core and FreeRTOS, a popular open-source real-time operating system, to do a baseline characterization. We perform a series of software optimizations on the vanilla RISC-V FreeRTOS port where we also explore and make use of ISA and micro-architectural features, improving the context switch time by 25\% and the interrupt latency by 33\% in the average and 20\% in the worst-case run on a CV32E40P when evaluated on a power control unit firmware and synthetic benchmarks. This improved version serves then in a comparison against the ARM Cortex-M series, which in turn allows us to highlight gaps and challenges to be tackled in the RISC-VISA as well as in the hardware/software ecosystem to achieve competitive maturity.},
+
+  keywords={},
+
+  doi={10.23919/DATE51398.2021.9474114},
+
+  ISSN={1558-1101},
+
+  month={Feb},}
+
+@book{10.5555/2051749,
+author = {Buttazzo, Giorgio C.},
+title = {Hard Real-Time Computing Systems: Predictable Scheduling Algorithms and Applications},
+year = {2011},
+isbn = {1461406757},
+publisher = {Springer Publishing Company, Incorporated},
+edition = {3rd},
+abstract = {This updated edition offers an indispensable exposition on real-time computing, with particular emphasis on predictable scheduling algorithms. It introduces the fundamental concepts of real-time computing, demonstrates the most significant results in the field, and provides the essential methodologies for designing predictable computing systems used to support time-critical control applications. Along with an in-depth guide to the available approaches for the implementation and analysis of real-time applications, this revised edition contains a close examination of recent developments in real-time systems, including limited preemptive scheduling, resource reservation techniques, overload handling algorithms, and adaptive scheduling techniques. This volume serves as a fundamental advanced-level textbook. Each chapter provides basic concepts, which are followed by algorithms, illustrated with concrete examples, figures and tables. Exercises and solutions are provided to enhance self-study, making this an excellent reference for those interested in real-time computing for designing and/or developing predictable control applications.}
+}
+
+
+
+@inproceedings{Truong2019AGA,
+  title={A Golden Age of Hardware Description Languages: Applying Programming Language Techniques to Improve Design Productivity},
+  author={Lenny Truong and Pat Hanrahan},
+  booktitle={Summit on Advances in Programming Languages},
+  year={2019},
+  url={https://api.semanticscholar.org/CorpusID:195877749}
+}
+
+@inproceedings{rustvc, author = {Zhang, Yuchen and Zhang, Yunhang and Portokalidis, Georgios and Xu, Jun}, title = {Towards Understanding the Runtime Performance of Rust}, year = {2023}, isbn = {9781450394758}, publisher = {Association for Computing Machinery}, address = {New York, NY, USA}, url = {https://doi.org/10.1145/3551349.3559494}, doi = {10.1145/3551349.3559494}, abstract = {Rust is a young systems programming language, but it has gained tremendous popularity thanks to its assurance of memory safety. However, the performance of Rust has been less systematically understood, although many people are claiming that Rust is comparable to C/C++ regarding efficiency. In this paper, we aim to understand the performance of Rust, using C as the baseline. First, we collect a set of micro benchmarks where each program is implemented with both Rust and C. To ensure fairness, we manually validate that the Rust version and the C version implement the identical functionality using the same algorithm. Our measurement based on the micro benchmarks shows that Rust is in general slower than C, but the extent of the slowdown varies across different programs. On average, Rust brings a 1.77x “performance overhead” compared to C. Second, we dissect the root causes of the overhead and unveil that it is primarily incurred by run-time checks inserted by the compiler and restrictions enforced by the language design. With the run-time checks disabled and the restrictions loosened, Rust presents a performance indistinguishable from C.}, booktitle = {Proceedings of the 37th IEEE/ACM International Conference on Automated Software Engineering}, articleno = {140}, numpages = {6}, location = {Rochester, MI, USA}, series = {ASE '22} }
+
+@misc{rustc-book, author = {{Rust Project}}, title = {The rustc book}, url={https://doc.rust-lang.org/nightly/rustc/platform-support.html}}
+
+@article{PCP, author = {Goodenough, J. B. and Sha, L.}, title = {The priority ceiling protocol: A method for minimizing the blocking of high priority Ada tasks}, year = {1988}, issue_date = {June 1-3, 1988}, publisher = {Association for Computing Machinery}, address = {New York, NY, USA}, volume = {VIII}, number = {7}, issn = {1094-3641}, url = {https://doi.org/10.1145/59368.59371}, doi = {10.1145/59368.59371}, journal = {Ada Lett.}, month = jun, pages = {20–31}, numpages = {12} }
+@book{rust-klabnik,
+author = {Klabnik, Steve and Nichols, Carol},
+title = {The Rust Programming Language},
+year = {2018},
+isbn = {1593278284},
+publisher = {No Starch Press},
+address = {USA},
+abstract = {The Rust Programming Language is the official book on Rust, an open-source, community-developed systems programming language that runs blazingly fast, prevents segfaults, and guarantees thread safety. This is the undisputed go-to guide to Rust, written by two members of the Rust core team, with feedback and contributions from 42 members of the community. The book assumes that youve written code in another programming language but makes no assumptions about which one, meaning the material is accessible and useful to developers from a wide variety of programming backgrounds. Known by the Rust community as The Book, The Rust Programming Language includes concept chapters, where youll learn about a particular aspect of Rust, and project chapters, where youll apply what youve learned so far to build small programs. The Book opens with a quick hands-on project to introduce the basics then explores key concepts in depth, such as ownership, the type system, error handling, and fearless concurrency. Next come detailed explanations of Rust-oriented perspectives on topics like pattern matching, iterators, and smart pointers, with concrete examples and exercises--taking you from theory to practice. The Rust Programming Language will also show you how to:- Grasp important concepts unique to Rust, like ownership, borrowing, and lifetimes- Use Cargo, Rusts built-in package manager, to build and maintain your code, including downloading and building dependencies- Effectively use Rusts zero-cost abstractions and employ your own Youll learn to develop reliable code thats speed and memory efficient, while avoiding the infamous and arcane programming pitfalls common at the systems level. When you need to dive down into lower-level control, this guide will show you how without taking on the customary risk of crashes or security holes and without requiring you to learn the fine points of a fickle toolchain. Youll also learn how to create command line programs, build single- and multithreaded web servers, and much more. The Rust Programming Language fully embraces Rusts potential to empower its users. This friendly and approachable guide will help you build not only your knowledge of Rust but also your ability to program with confidence in a wider variety of domains.}
+}
+
+@article{layland,
+  title={Scheduling algorithms for multiprogramming in a hard-real-time environment},
+  author={Liu, Chung Laung and Layland, James W},
+  journal={Journal of the ACM (JACM)},
+  volume={20},
+  number={1},
+  pages={46--61},
+  year={1973},
+  publisher={ACM New York, NY, USA}
+}
+@INPROCEEDINGS{all-about-nothing,
+  author={Dzialo, Pawel and Lindgren, Per},
+  booktitle={2025 IEEE Nordic Circuits and Systems Conference (NorCAS)}, 
+  title={All About Nothing: Towards Zero-Cost Hardware Accelerated RISC-V Interrupt Handling in Rust}, 
+  year={2025},
+  volume={},
+  number={},
+  pages={1-6},
+  keywords={Computer languages;Limiting;Embedded systems;Semantics;Hardware;Real-time systems;Registers;Hardware acceleration;Microprogramming;Embedded software;hardware/software co-design;Rust firmware;interrupt handling;RISC-V;real-time systems},
+  doi={10.1109/NorCAS66540.2025.11231308}}
+@misc{yosys,
+    author={{YosysHQ GmbH}},
+    title={Yosys Open SYnthesis Suite},
+    url={https://yosyshq.readthedocs.io/projects/yosys/en/latest/index.html}
+}
+@misc{riscv-formal,
+    author={{YosysHQ GmbH}},
+    title={RISC-V Formal Verification Framework Documentation},
+    url={https://yosyshq.readthedocs.io/projects/riscv-formal/en/latest/}
+}
+@misc{sby,
+    author={{YosysHQ GmbH}},
+    title={SymbiYosys (sby) Documentation},
+    url={https://symbiyosys.readthedocs.io/en/latest/}
+}
+
+@InProceedings{cbmc,
+author="Kroening, Daniel
+and Tautschnig, Michael",
+editor="{\'A}brah{\'a}m, Erika
+and Havelund, Klaus",
+title="CBMC -- C Bounded Model Checker",
+booktitle="Tools and Algorithms for the Construction and Analysis of Systems",
+year="2014",
+publisher="Springer Berlin Heidelberg",
+address="Berlin, Heidelberg",
+pages="389--391",
+abstract="CBMC implements bit-precise bounded model checking for C programs and has been developed and maintained for more than ten years. CBMC verifies the absence of violated assertions under a given loop unwinding bound. Other properties, such as SV-COMP's ERROR labels or memory safety properties are reduced to assertions via automated instrumentation. Only recently support for efficiently checking concurrent programs, including support for weak memory models, has been added. Thus, CBMC is now capable of finding counterexamples in all of SV-COMP's categories. As back end, the competition submission of CBMC uses MiniSat 2.2.0.",
+isbn="978-3-642-54862-8"
+}
+
+@misc{spike,
+    author={{RISC-V Foundation}},
+    title={riscv-isa-sim},
+    url={https://github.com/riscv-software-src/riscv-isa-sim}
+}
+
+@INPROCEEDINGS {hw-edf,
+author = { Nurmi, Antti and Beaurivage, Justin and Dzialo, Pawel and Lindgren, Per and Hamalainen, Timo D. },
+booktitle = { 2026 IEEE 32nd Real-Time and Embedded Technology and Applications Symposium (RTAS) },
+title = {{ Work in Progress: Hardware Support for EDF Scheduling on Bare-Metal Systems }},
+year = {2026},
+volume = {},
+ISSN = {},
+pages = {130-133},
+abstract = { Fixed-priority FP) interrupt control hardware is ubiquitous in embedded systems and is inherently best suited for static policies such as rate-monotonic (RM) scheduling. Earliest deadline first (EDF) scheduling is proven to allow for higher bounds on processor utilization, but its complexity and runtime cost make it generally unattainable without the use of a real-time operating system (RTOS). This manuscript presents how EDF scheduling could feasibly be achieved with negligible software overhead by utilizing a novel interrupt controller, the edfic. The edfic reimplements static priorities as dynamic deadlines with hardware-supported timestamping. The feasibility of this design is explored with initial physical design implementations on a 22-nm TSMC application-specific integrated circuit (ASIC) technology and comparisons to a state-of-the-art FP interrupt controller. A comparison to prior hardware EDF solutions highlights how the edfic is a fundamentally novel, lightweight approach to enabling EDF scheduling on very tightly-constrained embedded systems. },
+keywords = {Hardware;Timing;Scheduling;Schedules;Real-time systems;Design methodology;Program processors;Embedded systems;Printing;Very large scale integration},
+doi = {10.1109/RTAS68450.2026.00021},
+url = {https://doi.ieeecomputersociety.org/10.1109/RTAS68450.2026.00021},
+publisher = {IEEE Computer Society},
+address = {Los Alamitos, CA, USA},
+month =May}
+
+@misc{asplund2025zero,
+  title={Zero Latency Per-Task Isolation for the Hippomenes RISCV RealTime Core},
+  author={Asplund, Marcus},
+  year={2025}
+}
+@misc{hippo-formal,
+    title={hippo-formal},
+    author={{Pawel Dzialo(covetxd)}},
+    year={2026},
+    url={https://codeberg.org/covetxd/riscv-formal/src/branch/master/cores/hippomenes},
+}
