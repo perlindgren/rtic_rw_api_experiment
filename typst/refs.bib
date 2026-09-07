@@ -1,4 +1,86 @@
 
+Dynamic Data Structures without Dynamic Heap Allocator for Rust
+
+@inproceedings{heapless,
+   author = {Aparicio Rivera, Jorge and Lindner, Marcus and Lindgren, Per},
+   booktitle = {2018 IEEE 16TH INTERNATIONAL CONFERENCE ON INDUSTRIAL INFORMATICS (INDIN) : },
+   institution = {Luleå University of Technology, Computer Science},
+   institution = {Luleå University of Technology, Embedded Internet Systems Lab},
+   pages = {87--94},
+   eid = {8472097},
+   title = {Heapless : Dynamic Data Structures without Dynamic Heap Allocator for Rust},
+   series = {IEEE International Conference on Industrial Informatics INDIN},
+   DOI = {10.1109/INDIN.2018.8472097},
+   abstract = {Dynamic memory management is typically implemented using a global memory allocator, which may negatively impact the performance, reliability, and predictability of a program; in effect standards around safety-critical applications often discourage or even disallow dynamic memory management. This paper presents heapless, a collection of dynamic data structures (for vectors, strings, and circular buffers) that can be either stack or statically allocated, thus free of global allocator dependencies. The proposed data structures for vectors and strings closely mimic the Rust standard library implementations while adding support to gracefully handling cases of capacity exceedance. Our circular buffers act as queues and allowing channel like usage (by splitting). The Rust memory model together with the ability of local reasoning on memory requirements (brought by heapless) facilitates establishing robustness/safety guarantees and minimize attack surfaces of (industrial) IoT systems. We show that the heapless data structures are highly efficient and have predictable performance, thus suitable for hard real-time applications. Moreover, in our implementation heapless data structures are non-relocatable allowing mapping to hardware, useful, e.g., to DMA transfers. The feasibility, performance, and advantages of heapless are demonstrated by implementing a JSON serialization and de-serialization library for an ARM Cortex-M based IoT platform. },
+   ISBN = {978-1-5386-4829-2},
+   year = {2018}
+}
+
+
+@misc{rtic-nitro-key,
+    title = {Nitro Key 3 - RTIC},
+    url = {https://github.com/Nitrokey/nitrokey-3-firmware/blob/main/components/boards/Cargo.toml},
+    author = {Nitrokey Team},
+    year = {2026},
+}
+
+@INPROCEEDINGS{esa2024,
+  author={Müller, Robin and Nehlich, Paul and Klinkner, Sabine},
+  booktitle={2024 IEEE Space Computing Conference (SCC)}, 
+  title={Leveraging the Rust Programming Language for Space Applications}, 
+  year={2024},
+  volume={},
+  number={},
+  pages={40-50},
+  keywords={Computer languages;Satellites;Linux;Ecosystems;Computer architecture;Writing;Software;Libraries;Hardware;Safety},
+  doi={10.1109/SCC61854.2024.00011}}
+
+@article{ub2025,
+author = {Popescu, Lucian and Lopes, Nuno P.},
+title = {Exploiting Undefined Behavior in C/C++ Programs for Optimization: A Study on the Performance Impact},
+year = {2025},
+issue_date = {June 2025},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {9},
+number = {PLDI},
+url = {https://doi.org/10.1145/3729260},
+doi = {10.1145/3729260},
+abstract = {The C and C++ languages define hundreds of cases as having undefined behavior (UB). These include, for example, corner cases where different CPU architectures disagree on the semantics of an instruction and the language does not want to force a specific implementation (e.g., shift by a value larger than the bitwidth). Another class of UB involves errors that the language chooses not to detect because it would be too expensive or impractical, such as dereferencing out-of-bounds pointers.Although there is a common belief within the compiler community that UB enables certain optimizations that would not be possible otherwise, no rigorous large-scale studies have been conducted on this subject. At the same time, there is growing interest in eliminating UB from programming languages to improve security.In this paper, we present the first comprehensive study that examines the performance impact of exploiting UB in C and C++ applications across multiple CPU architectures. Using LLVM, a compiler known for its extensive use of UB for optimizations, we demonstrate that, for the benchmarks and UB categories that we evaluated, the end-to-end performance gains are minimal. Moreover, when performance regresses, it can often be recovered through small improvements to optimization algorithms or by using link-time optimizations.},
+journal = {Proc. ACM Program. Lang.},
+month = jun,
+articleno = {161},
+numpages = {24},
+keywords = {Undefined Behavior, Compiler Optimizations, C, C++, LLVM}
+}
+
+@inproceedings{wang2012undefined,
+  author    = {Wang, Xi and Chen, Haogang and Cheung, Alvin and Zuckerberg, Alan M. and Zeldovich, Nickolai},
+  title     = {Undefined behavior: what happened to my code?},
+  booktitle = {Proceedings of the 2012 Asia-Pacific Workshop on Systems},
+  series    = {APSys '12},
+  pages     = {1--6},
+  year      = {2012},
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  doi       = {10.1145/2349896.2349905}
+}
+
+@misc{rust-lang,
+    title = {Rust Language},
+    url = {https://rust-lang.org/},
+    author = {Rust Team},
+    year = {2026},
+}
+
+
+@misc{rust-docs-unsafe,
+    title = {Rust - The Unsafe Keyword},
+    url = {https://doc.rust-lang.org/stable/reference/unsafe-keyword.html?highlight=unsafe#the-unsafe-keyword},
+    author = {Rust Team},
+    year = {2026},
+}
+
 @article{safety2026,
 	title = {Safety and Security Critical Systems with Rust},
 	volume = {98},
@@ -180,11 +262,11 @@ keywords = {Pacemaker, Defibrillator, Cybersecurity}
     year = {2023},
 }
 
-@misc{rtic-rs,
-    title = {{The RTIC Book}},
-    url = {https://rtic.rs/2/book/en/},
+@misc{rtic-rs-v1,
+    title = {{The RTIC Book (v1.0)}},
+    url = {https://rtic.rs/1/book/en/},
     author = {{RTIC Team}},
-    year = {2024},
+    year = {2026},
 }
 
 @misc{hippomenes-git,
@@ -520,13 +602,6 @@ numpages = {6}
     title = {{stm32ral - Rust RAL (register access layer) for all STM32 microcontrollers}},
     url = {https://github.com/adamgreig/stm32ral},
     author = {{Adam Greig \& contributors}},
-    year = {2023},
-}
-
-@misc{heapless,
-    title = {{heapless - Heapless, `static` friendly data structures in Rust}},
-    url = {https://github.com/japaric/heapless},
-    author = {{Jorge Aparicio \& contributors}},
     year = {2023},
 }
 
