@@ -56,11 +56,11 @@
 #let fake-label(name) = place[#figure(supplement: none)[]#label(name)]
 
 #show: ieee.with(
-  title: [Rust safety invariants for RTIC with readers writer locks],
+  title: [Rust Safety Invariants for RTIC With Readers-Writer Locks],
   abstract: [
     The RTIC framework allows for safe concurrent programming in Rust. By leveraging on the Rust type system, illegal programs (that would violate memory safety) are rejected by the compiler.
 
-    In this paper we review the resource proxy design of the Rust RTIC framework, and highlight type system  features allowing for compile time safety validation. Moreover, we introduce an API extension that allows for readers-writer locks (a special case of multi unit resources) and show that the proposed API successfully enforces the Rust memory safety invariants at compile time.],
+    In this paper we review the resource proxy design of the Rust RTIC framework, and highlight type system  features allowing for compile-time safety validation. Moreover, we introduce an API extension that allows for readers-writer locks (a special case of multi unit resources) and show that the proposed API successfully enforces the Rust memory safety invariants at compile time.],
   authors: (
     (
       name: "Valhe Kouneli",
@@ -102,13 +102,13 @@
 
 The safety and security of systems rely increasingly on the behavior of their software stacks. Modern compiler back-ends optimize the code under the assumption that programs are well-formed. In fact, in case of programs having undefined behavior (UB), the compiler is free to generate *any* code along the path leading to up to the point of UB without any regard to the original program semantics@ub2025. Even worse, the compiler has no obligation to inform the programmer about the presence of UB, thus a program may pass compilation without any warnings or errors and yet express arbitrary behavior at runtime@wang2012undefined. In effect, for such programs all #pawel("code level") claims to safety and security are void!#per("No, unfortunately, all claims are void, e.g., if the code inside of the kernel/trusted zone has UB, the hardware protection mechanisms are not going to help you. Further motivation follows here:") This is unfortunately the case even for ARM Trust-Zone based systems (as well as PMP equipped RISC-V systems), where the hardware protection mechanisms are not going to help you if the code inside of the kernel/trusted zone has UB.
 
-In this paper we focus on a class of UB caused by memory safety violations. To this end, @rust_memory_safety reviews the Rust language and its guarantees to memory safety. In @rtic_framework we review the RTIC framework and how the Rust type system is leveraged to ensure memory safety at compile time. In @rtic_rw_api we introduce an RTIC API extension that allows for readers-writer locks (a special case of multi unit resources) and show that the proposed API (still) successfully enforces the Rust memory safety invariants at compile time. Finally, we conclude the work and contributions in @conclusions.
+In this paper we focus on a class of UB caused by memory safety violations. To this end, @rust_memory_safety reviews the Rust language and its guarantees to memory safety. In @rtic_framework we review the RTIC framework and how the Rust type system is leveraged to ensure memory safety at compile time. In @rtic_rw_api, we introduce an RTIC API extension that supports readers-writer locks for read-write resources, a special case of multi-unit resources, allowing concurrent readers and thereby reducing unnecessary blocking. We show that the proposed API continues to enforce Rust's memory-safety invariants at compile time. Finally, we conclude the work and contributions in @conclusions.
 
 = Rust memory safety <rust_memory_safety>
 
 The Rust programming language@rust-lang enforces strong memory safety guarantees, unless the programmer explicitly opts out by marking code as `unsafe`@rust-docs-unsafe.
 
-For a majority of program constructs the Rust compiler can at compile time verify memory safety, and reject programs that violate the memory safety rules. In case safety cannot be statically verified, the compiler will inject runtime checks, that halt execution (*panic*), _before_ the program runs into UB. In this way, Rust ensures that code always runs with #per("removed the (well)") defined behavior. This is in stark contrast to C/C++ where it is completely up to the programmer to ensure defined behavior, and thus positions Rust in a unique and advantageous position for safety and security-critical systems.
+For a majority of program constructs the Rust compiler can verify memory safety at compile time, and reject programs that violate the memory safety rules. In case safety cannot be statically verified, the compiler will inject runtime checks that halt execution (*panic*), _before_ the program runs into UB. In this way, Rust ensures that code always runs with #per("removed the (well)") defined behavior. This is in stark contrast to C/C++ where it is completely up to the programmer to ensure defined behavior, and thus positions Rust in a unique and advantageous position for safety and security-critical systems.
 
 == Rust Memory Safety Invariants <rust_safety_invariants>
 The Rust type system is based on an *ownership* model, the principle of which is ensuring that each piece of data has a single owner at any given time. The borrowing mechanism allows for temporary access to data without transferring ownership, under the following rules:
@@ -116,19 +116,19 @@ The Rust type system is based on an *ownership* model, the principle of which is
 - there can be either one mutable reference, or any number of immutable references to a piece of data at a time, and
 - references must always be valid.
 
-These rules are enforced at compile time by the Rust compiler. For this work we focus on the first rule (as data initialization is out of scope), and refer to it as the _Rust memory safety invariants_.
+These rules are enforced at compile time by the Rust compiler. In this work, we focus on the first rule (as data initialization is out of scope), and refer to it as the _Rust memory safety invariants_.
 
 == Bare metal systems<bare-metal-systems>
 
 In context of bare metal systems, we typically need to
-- access the underlying hardware (raw memory accesses), and to
+- access the underlying hardware (raw memory accesses),
 - share mutable data between concurrent tasks (e.g., interrupt handlers).
 
-As being outside of control of the Rust compiler, raw memory accesses and sharing of mutable data are inherently `unsafe`.
+As they are outside the control of the Rust compiler, raw memory accesses and sharing mutable data are inherently `unsafe`.
 
 Rust provides a mechanism for marking code blocks as `unsafe`, allowing the programmer to explicitly opt out of the Rust safety guarantees, and thus access the underlying hardware or share mutable data between concurrent tasks. The soundness of `unsafe` code relies on the programmer upholding the invariants from section @rust_memory_safety.
 
-Notice, in comparison to traditional C/C++, we are still in a vastly better position as only the explicitly marked *unsafe* code blocks need manual review and verification, whereas in C/C++ the entire code base is a ticking bomb@safety2026#pawel("The ticking bomb is maybe a bit taking it too far for a paper (i mean i agree, but...)").#per("Well, the ticking bomb is not not that bad as a metaphor, in case of UB you might not directly see the problem, the effect might be observable at some later point in time, and even elsewhere (not where the the UB was caused, since we have UB propagation).") The _ticking bomb_ analogy might sound overly dramatic, but it is well grounded in the temporal nature of UB propagation, where effects of UB may be not be directly observable, but manifest at some later point in time. As UB is permissible at C/C++ language level, the best you can hope for is that safety violations lead to immediate and observable effects (like halting the system), but unless proven correct by formal verification, C/C++ code bases are inherently unsafe, and thus _ticking bombs_.
+Notice that, compared to traditional C/C++, we are still in a vastly better position: only explicitly marked *unsafe* code blocks require manual review and verification, whereas in C/C++ the entire code base is potentially unsafe. A key aspect of UB is its temporal nature: the effects of UB may be not be directly observable, but may manifest at some later point in time. As UB is permissible at C/C++ language level, the best one can hope for is that safety violations lead to immediate and observable effects (like halting the system). Unless proven correct through formal verification, C/C++ code bases are inherently unsafe.
 
 = RTIC framework <rtic_framework>
 
@@ -141,13 +141,13 @@ Leveraging Rust procedural macros, the RTIC framework:
 - performs static analysis of the model (SRP-based resource ceiling analysis etc.),
 - generates code that is compiled to a stand-alone binary.
 
-Run-time overhead is in Rust terms _zero-cost_#pawel("these zero cost maybe should be relaxed, i mean e.g. dispatching a task on Cortex-M is 13 cycles or whatever. i don't see how you can do it better (except for software tasks and just binding each to its own dispatcher, avoiding the queues, as it stands it's totally not zero cost), but it's not zero cost")
+Run-time overhead is in Rust terms _zero-cost_
 #footnote[Rust _zero-cost_, implies that no unnecessary runtime overhead is introduced, not the the cost is an absolute zero@rust-klabnik.], where the generated binary efficiently exploits the underlying hardware for scheduling and resource protection without any non-necessary overhead.
-#footnote[In addition to _zero-cost_ interrupt bound hardware tasks, RTIC v1 supports optional software tasks. The latter rely an external library for concurrent queues (the _heapless_ crate@heapless), which while being highly efficient do not claim to be _zero-cost_ to the general problem of concurrent queues.] In fact, one can even claim RTIC to be _sub-zero-cost_ as outperforming hand-written implementations of the same application logic. This is possible as the static analysis allows for optimizations of the entire application model, which is typically out of reach for a human programmer. #per("In Rust terms, means that no un-necessary overhead is introduced, NOT that the cost is zero. I added a footnote to clarify this.")
+#footnote[In addition to _zero-cost_ interrupt bound hardware tasks, RTIC v1 supports optional software tasks. The latter rely an external library for concurrent queues (the _heapless_ crate@heapless), which while being highly efficient do not claim to be _zero-cost_ to the general problem of concurrent queues.] In fact, one can even claim RTIC to be _sub-zero-cost_ as outperforming hand-written implementations of the same application logic. This is possible as the static analysis allows for optimizations of the entire application model, which is typically out of reach for a human programmer.
 
-The key to guaranteed memory safety of RTIC is its underlying resource proxy design, where shared resources are represented as proxies that enforce the Rust ownership and borrowing rules.
+The key to RTIC's guaranteed memory safety is its underlying resource-proxy design, in which shared resources are represented by proxies that enforce Rust's ownership and borrowing rules.
 
-In the following we will review key design aspects ensuring the Rust memory safety invariants. For sake of brevity, details on SRP compliance are deliberately omitted.
+In the following, we will review key design aspects that ensure the memory-safety invariants of Rust. For the sake of brevity, details concerning SRP compliance are deliberately omitted.
 
 == RTIC-core, Mutex trait
 
@@ -167,9 +167,9 @@ The `lock` method takes a closure that receives a mutable reference to the prote
 
 == Mutex trait implementation
 
-For each shared resource in the system, the RTIC framework generates a concrete implementation of the `Mutex` trait, which based on the priority of the tasks accessing it, ensures safe concurrent access (i.e, exclusive access).
+For each shared resource in the system, the RTIC framework generates a concrete implementation of the `Mutex` trait, which ensures safe concurrent access (i.e, exclusive access) that is based on the priority of the tasks accessing it.
 
-To illustrate the principle we side step the RTIC framework and implement the `Mutex` trait manually.
+To illustrate the principle, we side-step the RTIC framework, and implement the `Mutex` trait manually.
 
 ```rust
 pub struct TestMutex<T> {
@@ -181,9 +181,9 @@ impl<T> Mutex for TestMutex<T> {
 
     fn lock<R>(&mut self, f: impl FnOnce(&mut Self::T) -> R) -> R {
         // In a real implementation, this would be generated to ensure exclusive access to the data
-        // For SRP, raise system ceiling to that of the highest priority task accessing the resource
+        // As dictated by SRP, raise system ceiling to that of the highest priority task accessing the resource
         f(&mut self.data)
-        // For SRP, restore (old) system ceiling
+        // As dictated by SRP, restore (old) system ceiling
     }
 }
 ```
@@ -196,7 +196,7 @@ In the following we will illustrate how the `Mutex` implementation successfully 
 
 === Example Valid Access
 
-To illustrate the principle, we side step the RTIC framework and manually implement the `Mutex` trait for a simple data structure, `NonAtomicU32` (which cannot be safely shared between concurrent tasks without resource protection in place).
+To illustrate the principle, we again side-step the RTIC framework and manually implement the `Mutex` trait for a simple data structure, `NonAtomicU32` (which cannot be safely shared between concurrent tasks without resource protection in place).
 
 An example of valid resource use:
 
@@ -234,17 +234,7 @@ let d = mutex.lock(|data| {
   "The terminal output was not so nice looking, i've added an interpretation instead. The original is left commented out.",
 )
 
-The compiler error (@appendix, @lst:mutex_leak) points out that, the lifetime of `data` ends at the return point of the closure.
-
-#per(
-  " removed Pawels text: In essence, had the program compiled successfully, `d` would be pointing to deallocated data",
-)
-
-#per(
-  "No, there is no de-allocation, the underlying data is statically allocated, the problem that leaking a pointer directly breaks with the Rust borrowing invariants. It might be worth clarifying as follows:",
-)
-
-In case of leaking, the Rust borrowing invariants would be violated, causing a potential race condition (as a leaked reference would be accessible concurrently from multiple tasks of the system outside of the protection of the `Mutex` lock).
+The compiler error (@appendix, @lst:mutex_leak) points out that the lifetime of `data` ends at the return point of the closure. If the reference was leaked, Rust's borrowing invariants would be violated, causing a potential race condition: a leaked reference would be accessible concurrently from multiple tasks of the system outside of the protection of the `Mutex` lock.
 
 === Mutex nesting <example_mutex_nesting>
 
@@ -259,22 +249,22 @@ let d = mutex.lock(|data| {
     });
 });
 ```
-Notice here that both `data` and `data_inner` are mutable references to the _same_ underlying data, which violates Rust's borrowing invariants @rust_safety_invariants, as pointed out by the resulting compiler error (@appendix, @lst:mutex_nesting).
+Notice here that both `data` and `data_inner` are mutable references to the _same_ underlying data, which violates Rust's borrowing invariants introduced in @rust_safety_invariants. This is also pointed out by the resulting compiler error (@appendix, @lst:mutex_nesting).
 
 === Mutex safety guarantees
 
-The above examples together show that the `Mutex` implementation successfully leverages the Rust type system to reject safety violations (see @rust_safety_invariants) at compile time:
+The above examples together show that the `Mutex` implementation successfully leverages the Rust type system to reject safety violations at compile time:
 
-- leaking of references (see @example_leaking)
-- mutable aliasing of the underlying data (see @example_mutex_nesting)
+- leaking of references (see @example_leaking),
+- mutable aliasing of the underlying data (see @example_mutex_nesting).
 
 
 = RTIC-RW, Readers-Writer Locks <rtic_rw_api>
 
-In recent work, RTIC-RW has been proposed as an extension to the RTIC framework, allowing for readers-writer locks (a special case of multi unit resources). It has been shown that readers-writer locks can be implemented in a safe manner without implying any additional run-time overhead, thus bringing a strict improvement over the current single unit resource design of RTIC.
+In recent work, RTIC-RW has been proposed as an extension to the RTIC framework, supporting readers-writer locks that protect read-write resources (a special case of multi unit resources). It has been shown that readers-writer locks can be implemented in a safe manner without incurring any additional run-time overhead, thus providing a strict improvement over RTIC's current single-unit resource design.
 
-In this work we contribute with the API design of RTIC-RW and show that its implementation successfully enforces the Rust memory safety invariants #pawel("Again, we should explicitly define the invariants we are trying to uphold somewhere, or let someone else do it for us by citation") at compile time.
-#per("As above")
+In this work, we contribute the API design of RTIC-RW and show that its implementation successfully enforces the Rust memory-safety invariants (@rust_safety_invariants) at compile time.
+
 == RTIC-core, Proposed MutexRW trait
 
 ```rust
@@ -288,9 +278,9 @@ pub trait MutexRW {
     fn write_lock<R>(&mut self, f: impl FnOnce(&mut Self::T) -> R) -> R;
 }
 ```
-As described in @rust_memory_safety, the Rust concept of borrowing allows strictly either multiple immutable borrows, or a single mutable borrow of any underlying value. The `read_lock` method borrows `&self` (the proxy) in an immutable manner, thus allowing multiple concurrent readers. The `write_lock` method borrows `&mut self` (the proxy) in a mutable manner, thus allowing only a single writer.
+As described in @rust_memory_safety, Rust's borrowing rules allow either multiple immutable borrows or a single mutable borrow of any given value. The `read_lock` method takes `&self`, an immutable reference to the proxy, thus allowing multiple concurrent readers. The `write_lock` method takes `&mut self`, a mutable reference to the proxy, thus allowing only a single writer.
 
-In the following section, we will illustrate how the `MutexRW` implementation successfully leverages the Rust type system to reject Rust safety invariant violations at compile time.
+In the following section, we will illustrate how the `MutexRW` implementation successfully leverages the Rust type system to reject violations of Rust's memory-safety invariants at compile time.
 
 === Example Valid Nested Access
 
@@ -306,9 +296,7 @@ let (x, y) = mutex_rw.read_lock(|data| {
 });
 // do something with the copied data (x, y)
 ```
-Even if the `data` and `data_inner` are both references to the _same_ underlying data, this follows the Rust borrowing invariants as both are immutable references, and thus the compiler will accept the program.
-
-The Rust compiler concludes that we can safely nest read locks, as the `read_lock` method borrows the proxy in an immutable manner.
+Even if the `data` and `data_inner` are both references to the _same_ underlying data, the nested `read_lock` follows Rust's borrowing invariants, and thus the compiler will accept the program. The Rust compiler concludes that we can safely nest read locks, as the `read_lock` method borrows the proxy in an immutable manner.
 
 We can safely copy the underlying data. The fields are of type `u32` (which implements the `Copy` trait), and return it from the closure.
 
@@ -363,11 +351,11 @@ The above examples together show that the `MutexRW` implementation successfully 
 
 = Discussion and Future Work<discussion>
 
-As a point of reflection, we note that the underlying SRP theory allows for general multi unit resources. However, for the general case any implementation thereof would require run-time tracking of the number of units currently held, thus imply a run-time overhead. To investigate wether the cost would be acceptable in practice is left for future work.
+As a point of reflection, we note that the underlying SRP theory allows for general multi-unit resources. However, implementing the general case would require run-time tracking of the number of units currently held, and would thus incur run-time overhead. Whether this is acceptable in practice is left for future work.
 
-Another observation is that SRP allows promotion and demotion of held units. On a glance, this would allow for a read lock to be promoted to a write lock, and vice versa.
+Another observation is that technically, SRP does not allow taking a write lock inside a read lock, even though it is a semantically valid operation outside of the Rust context. In SRP, RW resources are modeled as multi-unit resources, where the number of units corresponds to the number of jobs accessing the resource, and a read lock uses one unit and a write lock all of the units. Therefore, inside a read lock, not all units are available, and a write lock cannot be taken. However, while it is not safe in Rust, based on the SRP algorithm alone, we may safely allow a write lock to be taken if no other job is holding locks of the resource, and still uphold all the SRP-given scheduling guarantees. Thus, SRP allows the promotion of a read lock to a write lock and demoting it back to a read lock once the write operation is over. In Rust, to implement this safely, a write lock nested inside a read lock should consume the read-only reference.
 
-Reference demotion is indeed possible without any changes to the proposed MutexRW API as follows:
+Reference demotion is possible without any changes to the proposed MutexRW API as follows:
 
 ```rust
 let x = mutex_rw.write_lock(|data| {
@@ -386,26 +374,11 @@ The situation of promotion is more complex, as re-borrowing an immutable referen
 
 To this end we might consider an API extension to allow for promotion of a read lock to a write lock. This however is out of scope for this paper, and is left for future work.
 
-
-
-
-
-
-
-
-
-
-
-
 = Conclusions <conclusions>
 
-In this paper we have reviewed the resource proxy design of the Rust RTIC framework, and highlighted type system features allowing for compile time safety validation. Moreover, we have introduced an API extension that allows for readers-writer locks (a special case of multi unit resources) and shown that the proposed API successfully enforces the Rust memory safety invariants at compile time.
+In this paper we have reviewed the resource-proxy design of the Rust-based RTIC framework and highlighted the type system features that enable compile-time safety guarantees. We have also introduced an API extension that enables the usa of readers-writer locks and shown that the proposed API successfully enforces Rust's memory safety invariants at compile time.
 
-While RTIC-RW brings a strict improvement to scheduling properties over the current single unit resource design of RTIC, prior work lacked the API design to ensure compile time rejection of Rust safety invariant violations. In this work we have detailed the API design of the underlying `MutexRW` and shown that its implementation successfully enforces the Rust memory safety invariants at compile time.
-
-
-// Example references appendix: @appendix , listing: @lst:foo
-
+While RTIC-RW provides a strict improvement in scheduling properties over RTIC's current single unit resource design, prior work lacked an API design that ensures compile-time rejection of violations of Rust's safety invariants. In this work, we have detailed the API design of the underlying `MutexRW` and shown that its implementation successfully enforces these invariants at compile time.
 
 #show: appendix
 
