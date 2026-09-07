@@ -265,7 +265,7 @@ In recent work, RTIC-RW has been proposed as an extension to the RTIC framework,
 
 In this work, we contribute the API design of RTIC-RW and show that its implementation successfully enforces the Rust memory-safety invariants (@rust_safety_invariants) at compile time.
 
-== RTIC-core, Proposed MutexRW trait
+== Proposed MutexRW trait
 
 ```rust
 pub trait MutexRW {
@@ -288,6 +288,7 @@ We reuse the `NonAtomicU32` data structure from @rtic_framework, and implement t
 
 ```rust
 ...
+// mutex proxy is passed through the task context, and is guaranteed to be unique for the task
 let (x, y) = mutex_rw.read_lock(|data| {
     let y = mutex_rw.read_lock(|data_inner| {
         data_inner.y
@@ -313,6 +314,7 @@ Leaking rejection is strictly analogous to the `Mutex` implementation, and is th
 Considering the following, faulty example:
 
 ```rust
+// mutex proxy is passed through the task context, and is guaranteed to be unique for the task
 mutex_rw.read_lock(|data| {
     mutex_rw.write_lock(|data_inner| {
         data_inner.x += data.x;
@@ -326,6 +328,7 @@ Notice here that both `data` and `data_inner` are references to the _same_ under
 
 Inverting the lock acquisition order from the previous example:
 ```rust
+// mutex proxy is passed through the task context, and is guaranteed to be unique for the task
 mutex_rw.write_lock(|data| {
     data.x += 1;
     mutex_rw.read_lock(|data_inner| {
@@ -334,7 +337,6 @@ mutex_rw.write_lock(|data| {
 });
 ```
 Here, again, `data` and `data_inner` are references to the same data, with `data` being mutable. This violation is successfully caught by the Rust compiler, analogous to previous example.
-// (@appendix, @lst:mutex_rw_w_r_nesting).
 
 === MutexRW safety guarantees
 
@@ -348,6 +350,25 @@ The above examples together show that the `MutexRW` implementation successfully 
 )
 - leaking of references, analogous to the original `Mutex` implementation (see @example_leaking)
 - mutable aliasing of the underlying data, by either read-write or write-read nesting (see @example_mutex_rw_nesting and @example_mutex_wr_nesting)
+
+== Proposed MutexR trait <mutex_r>
+
+In compliance with the RTIC framework, we can introduce read-only accesses proxies.
+
+```rust
+// mutex read-only proxy is passed through the task context, and is guaranteed to be unique for the task
+pub trait MutexR {
+    /// Data protected by the mutex
+    type T;
+
+    /// Creates a critical section and grants temporary access to the protected data
+    fn read_lock<R>(&self, f: impl FnOnce(&Self::T) -> R) -> R;
+}
+```
+
+=== Proposed MutexR safety guarantees <mutex_r_safety>
+
+A read-only proxy can only be used to read the underlying data. It will analogously to `MutexRW` allow `read_lock` nesting and reject leaking of references. Examples are omitted for brevity.
 
 = Discussion and Future Work<discussion>
 
@@ -445,7 +466,7 @@ Compiler error messages have been slightly reformatted for clarity, but are othe
 
 #figure(
   caption: "`MutexRW` read-write nesting error message",
-  placement: bottom,
+  placement: top,
   scope: "parent",
   ```terminal
   error[E0502]: cannot borrow `mutex_rw` as mutable because it is also borrowed as immutable
