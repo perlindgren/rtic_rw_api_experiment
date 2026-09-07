@@ -206,7 +206,7 @@ let d = mutex.lock(|data| {
 
 We can safely copy the underlying data in case the type implements the `Copy` trait, and return it from the closure.
 
-=== Example Leaking
+=== Example Leaking <example_leaking>
 
 Attempts to leak a reference to the underlying `NonAtomicU32` outside of the protected closure are be rejected by the compiler.
 
@@ -247,7 +247,7 @@ points out that, the lifetime of `data` ends at the return point of the closure.
   "I think its nice to show the actual compiler error, Now I tired it as a footnote, alternatively we could try to have an appendix to get it out the way, maybe with a smaller font",
 )
 
-=== Mutex nesting
+=== Mutex nesting <example_mutex_nesting>
 
 The Rust compiler will successfully reject mutable aliasing of the underlying data.
 
@@ -260,7 +260,7 @@ let d = mutex.lock(|data| {
     });
 });
 ```
-Notice here that both `data` and `data_inner` are mutable references to the _same_ underlying data, which violates Rust's borrowing invariants@rust_safety_invariants, something pointed out by the resulting compiler error.
+Notice here that both `data` and `data_inner` are mutable references to the _same_ underlying data, which violates Rust's borrowing invariants @rust_safety_invariants, something pointed out by the resulting compiler error.
 
 /*
 ```rust
@@ -293,15 +293,10 @@ error[E0499]: cannot borrow `mutex` as mutable more than once at a time
 */
 === Mutex safety guarantees
 
-The above examples together show that the `Mutex` implementation successfully leverages the Rust type system to reject Rust safety invariant violations at compile time:
+The above examples together show that the `Mutex` implementation successfully leverages the Rust type system to reject safety violations (see @rust_safety_invariants) at compile time:
 
-#pawel(
-  "did we define these two as THE invariants somewhere earlier? i mean they are both sides of the same coin, IMO the real core issue is mutable aliasing (i.e. leaking of references will eventually cause mutable aliasing once the backing memory is reallocated, which is why it's a problem)",
-) #per(
-  "It is the Rust background section, we should label it, and perhaps clarify that also references always point to valid data, but our abstraction does not touch initialization, per se",
-)
-- leaking of references
-- mutable aliasing of the underlying data
+- leaking of references (see @example_leaking)
+- mutable aliasing of the underlying data (see @example_mutex_nesting)
 
 
 = RTIC-RW, Readers-Writer Locks <rtic_rw_api>
@@ -355,7 +350,7 @@ This trivially follows the validation of the `Mutex` lock implementation, and is
 
 Leaking rejection is strictly analogous to the `Mutex` implementation, and is thus omitted for brevity.
 
-=== MutexRW Read-Write nesting
+=== MutexRW Read-Write nesting <example_mutex_rw_nesting>
 
 Considering the following, faulty example:
 
@@ -382,7 +377,7 @@ error[E0502]: cannot borrow `mutex_rw` as mutable because it is also borrowed as
    |         -------- second borrow occurs due to use of `mutex_rw` in closure
 ```
 */
-=== MutexRW Write-Read nesting
+=== MutexRW Write-Read nesting <example_mutex_wr_nesting>
 
 Inverting the lock acquisition order from the previous example:
 ```rust
@@ -393,7 +388,8 @@ mutex_rw.write_lock(|data| {
     });
 });
 ```
-Here, again, `data` and `data_inner` are references to the same data, with `data` being mutable. This violation is succesfully caught by the Rust compiler.
+Here, again, `data` and `data_inner` are references to the same data, with `data` being mutable. This violation is succesfully caught by the Rust compiler, analogous to previous example.
+
 /*
 With the corresponding compiler error message:
 
@@ -425,8 +421,8 @@ The above examples together show that the `MutexRW` implementation successfully 
 #per(
   "I disagree, we show that leaking is not possible for stock RTIC, maybe we should add why, its the lifetime of the borrowed reference passed to the closure. For RTIC-RW we mention it is analogous to stock RTIC",
 )
-- leaking of references
-- mutable aliasing of the underlying data
+- leaking of references, analogous to the original `Mutex` implementation (see @example_leaking)
+- mutable aliasing of the underlying data, by either read-write or write-read nesting (see @example_mutex_rw_nesting and @example_mutex_wr_nesting)
 
 = Discussion and Future Work<discussion>
 
@@ -507,7 +503,7 @@ To this end we might consider an API extension to allow for promotion of a read 
 
 In this paper we have reviewed the resource proxy design of the Rust RTIC framework, and highlighted type system features allowing for compile time safety validation. Moreover, we have introduced an API extension that allows for readers-writer locks (a special case of multi unit resources) and shown that the proposed API successfully enforces the Rust memory safety invariants at compile time.
 
-While RTIC-RW brings a strict improvement to scheduling properties over the current single unit resource design of RTIC, prior work lacked the API design to ensure compile time rejection of Rust safety invariant violations. In this work we have detailed the API design of RTIC-RW and shown that its implementation successfully enforces the Rust memory safety invariants at compile time.
+While RTIC-RW brings a strict improvement to scheduling properties over the current single unit resource design of RTIC, prior work lacked the API design to ensure compile time rejection of Rust safety invariant violations. In this work we have detailed the API design of the underlying `MutexRW` and shown that its implementation successfully enforces the Rust memory safety invariants at compile time.
 
 
 
