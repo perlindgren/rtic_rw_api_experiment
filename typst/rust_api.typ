@@ -134,20 +134,20 @@ Notice that, compared to traditional C/C++, we are still in a vastly better posi
 
 The RTIC framework is designed to provide concurrent access to shared mutable data without the need of any *unsafe* code. By leveraging on the Rust type system, memory safety is guaranteed at compile time, leaving the programmer to focus on the application logic. Access to underlying hardware can be done through (internally *unsafe*) pre-validated abstractions.
 
-RTIC is a Domain Specific Language (DSL) extending Rust with a Stack Resource Policy (SRP) based concurrency model for bare metal programming. RTIC has since its release (2017, _cortex_m_rtic_) gained popularity (with \~1 million downloads accumulatively) and is now widely used in production systems (e.g., at Volvo Cars, and at the European Space Agency).
+RTIC is a Domain Specific Language (DSL) extending Rust with a Stack Resource Policy (SRP) based concurrency model for bare-metal programming. Since its release (2017, _cortex_m_rtic_), RTIC has gained popularity (with \~1 million downloads accumulatively) and is now widely used in production systems (e.g., at Volvo Cars, and at the European Space Agency).
 
 Leveraging Rust procedural macros, the RTIC framework:
 - parses the application into an Abstract Syntax Tree (AST) model,
 - performs static analysis of the model (SRP-based resource ceiling analysis etc.),
 - generates code that is compiled to a stand-alone binary.
 
-Run-time overhead is in Rust terms _zero-cost_#pawel("these zero cost maybe should be relaxed, i mean e.g. dispatching a task on Cortex-M is 13 cycles or whatever. i don't see how you can do it better (except for software tasks and just binding each to its own dispatcher, avoiding the queues, as it stands it's totally not zero cost), but it's not zero cost")
-#footnote[Rust _zero-cost_, implies that no unnecessary runtime overhead is introduced, not the the cost is an absolute zero.], where the generated binary efficiently exploits the underlying hardware for scheduling and resource protection without any non-necessary overhead.
-#footnote[In addition to _zero-cost_ interrupt bound hardware tasks, RTIC v1 supports optional software tasks. The latter rely an external library for concurrent queues (the _heapless_ crate), which while being highly efficient do not claim to be _zero-cost_ to the general problem of concurrent queues.] In fact, one can even claim RTIC to be _sub-zero-cost_ as outperforming hand-written implementations of the same application logic. This is possible as the static analysis allows for optimizations of the entire application model, which is typically out of reach for a human programmer. #per("In Rust terms, means that no un-necessary overhead is introduced, NOT that the cost is zero. I added a footnote to clarify this.")
+Run-time overhead is in Rust terms _zero-cost_
+#footnote[The Rust term _zero-cost_ means that an abstraction introduces no unnecessary run-time overhead; it does not imply that its run-time cost is literally zero.], where the generated binary efficiently exploits the underlying hardware for scheduling and resource protection without any non-necessary overhead.
+#footnote[In addition to _zero-cost_ interrupt-bound hardware tasks, RTIC v1 supports optional software tasks. The latter rely an external library for concurrent queues (the _heapless_ crate). While highly efficient, such software implementations cannot generally be considered to be _zero-cost_ with respect to the problem of implementing concurrent queues.] In fact, one could even characterize RTIC as _sub-zero-cost_, as it can outperform hand-written implementations of the same application logic. This is possible as the static analysis allows for optimizations of the entire application model, which is typically out of reach for a human programmer.
 
-The key to guaranteed memory safety of RTIC is its underlying resource proxy design, where shared resources are represented as proxies that enforce the Rust ownership and borrowing rules.
+The key to RTIC's guaranteed memory safety is its underlying resource-proxy design, in which shared resources are represented by proxies that enforce Rust's ownership and borrowing rules.
 
-In the following we will review key design aspects ensuring the Rust memory safety invariants. For sake of brevity, details on SRP compliance are deliberately omitted.
+In the following, we will review key design aspects that ensure the memory-safety invariants of Rust. For the sake of brevity, details concerning SRP compliance are deliberately omitted.
 
 == RTIC-core, Mutex trait
 
