@@ -58,9 +58,7 @@
 #show: ieee.with(
   title: [Rust Safety Invariants for RTIC With Readers-Writer Locks],
   abstract: [
-    The RTIC framework allows for safe concurrent programming in Rust. By leveraging on the Rust type system, illegal programs (that would violate memory safety) are rejected by the compiler.
-
-    In this paper we review the resource proxy design of the Rust RTIC framework, and highlight type system  features allowing for compile-time safety validation. Moreover, we introduce an API extension that allows for readers-writer locks (a special case of multi unit resources) and show that the proposed API successfully enforces the Rust memory safety invariants at compile time.],
+    The RTIC framework allows for safe concurrent programming in Rust. By leveraging on the Rust type system, illegal programs (that would violate memory safety) are rejected by the compiler. In this paper we review the resource proxy design of the Rust RTIC framework, and highlight type system  features allowing for compile-time safety validation. Moreover, we introduce an API extension that allows for readers-writer locks (a special case of multi unit resources) and show that the proposed API successfully enforces the Rust memory safety invariants at compile time.],
   authors: (
     (
       name: "Valhe Kouneli",
@@ -91,7 +89,13 @@
       email: "per.lindgren@ltu.se",
     ),
   ),
-  index-terms: ("Real-time systems", "Safety-critical systems", "Formal verification"),
+  index-terms: (
+    "Real-time systems",
+    "Safety-critical systems",
+    "Memory safety",
+    "Rust programming language",
+    "RTIC framework",
+  ),
   bibliography: bibliography("refs.bib"),
   figure-supplement: [Fig.],
 )
