@@ -13,6 +13,8 @@
 )
 
 
+
+
 /// altered version of https://github.com/typst/templates/blob/main/charged-ieee/lib.typ
 /// DOES NOT WORK WITH DEEPER LEVELS
 #let appendix(body) = {
@@ -67,13 +69,13 @@
       location: [Tampere, Finland],
       email: "valhe.kouneli@tuni.fi",
     ),
-    (
-      name: "Henri ...",
-      //   department: [Department of Computer Science, Electrical and Space Engineering],
-      //   organization: [Luleå University of Technology],
-      //   location: [Luleå, Sweden],
-      //   email: "malte.munch@ltu.se",
-    ),
+    // (
+    //   name: "Henri ...",
+    //   //   department: [Department of Computer Science, Electrical and Space Engineering],
+    //   //   organization: [Luleå University of Technology],
+    //   //   location: [Luleå, Sweden],
+    //   //   email: "malte.munch@ltu.se",
+    // ),
     (
       name: "Pawel Dzialo",
       department: [Department of Computer Science, Electrical and Space Engineering],
@@ -90,9 +92,11 @@
     ),
   ),
   index-terms: ("Real-time systems", "Safety-critical systems", "Formal verification"),
-  // bibliography: bibliography("refs.bib"),
+  bibliography: bibliography("refs.bib"),
   figure-supplement: [Fig.],
 )
+
+#show raw: set text(font: "DejaVu Sans Mono", size: 7pt, fill: black)
 
 = Introduction <introduction>
 
@@ -392,16 +396,17 @@ While RTIC-RW brings a strict improvement to scheduling properties over the curr
 
 // Example references appendix: @appendix , listing: @lst:foo
 
-// This is incredibly funky, just what it is.
-#pagebreak()
+
 #show: appendix
+
 = Compiler Error Messages<appendix>
 Compiler error messages have been slightly reformatted for clarity, but are otherwise genuine compiler output. Notice that examples in the main text are excerpts from real code thus do not match error messages 1-1.
 
-== Original RTIC Mutex leaking error messages
 
 #figure(
   caption: "`Mutex` leaking error message",
+  placement: bottom,
+  scope: "parent",
   ```terminal
   error: lifetime may not live long enough
     --> examples/mutex_leak.rs:18:9
@@ -419,7 +424,9 @@ Compiler error messages have been slightly reformatted for clarity, but are othe
 
 #figure(
   caption: "`Mutex` nesting error message",
-  ```rust
+  placement: bottom,
+  scope: "parent",
+  ```terminal
   error[E0499]: cannot borrow `mutex` as mutable more than once at a time
     --> examples/mutex_nesting.rs:15:13
   15 |       let d = mutex.lock(|data| {
@@ -448,11 +455,12 @@ Compiler error messages have been slightly reformatted for clarity, but are othe
   ```,
 )<lst:mutex_nesting>
 
-== MutexRW leaking error messages
 
 #figure(
   caption: "`MutexRW` read-write nesting error message",
-  ```rust
+  placement: bottom,
+  scope: "parent",
+  ```terminal
   error[E0502]: cannot borrow `mutex_rw` as mutable because it is also borrowed as immutable
     --> examples/mutex_rw_r_w.rs:15:24
   15 |     mutex_rw.read_lock(|data| {
@@ -467,7 +475,9 @@ Compiler error messages have been slightly reformatted for clarity, but are othe
 
 #figure(
   caption: "`MutexRW` write-read nesting error message",
-  ```rust
+  placement: bottom,
+  scope: "parent",
+  ```terminal
   error[E0502]: cannot borrow `mutex_rw` as mutable because it is also borrowed as immutable
     --> examples/mutex_rw_w_r.rs:15:5
      |
