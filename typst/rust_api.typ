@@ -469,7 +469,7 @@ Compiler error messages have been slightly reformatted for clarity, but are othe
 
 #figure(
   caption: "`MutexRW` read-write nesting error message",
-  placement: top,
+  placement: bottom,
   scope: "parent",
   ```terminal
   error[E0502]: cannot borrow `mutex_rw` as mutable because it is also borrowed as immutable
