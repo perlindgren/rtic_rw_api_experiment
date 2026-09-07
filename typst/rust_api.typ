@@ -262,10 +262,10 @@ The above examples together show that the `Mutex` implementation successfully le
 
 = RTIC-RW, Readers-Writer Locks <rtic_rw_api>
 
-In recent work, RTIC-RW has been proposed as an extension to the RTIC framework, allowing for readers-writer locks (a special case of multi unit resources). It has been shown that readers-writer locks can be implemented in a safe manner without implying any additional run-time overhead, thus bringing a strict improvement over the current single unit resource design of RTIC.
+In recent work, RTIC-RW has been proposed as an extension to the RTIC framework, supporting readers-writer locks that protect read-write resources (a special case of multi unit resources). It has been shown that readers-writer locks can be implemented in a safe manner without incurring any additional run-time overhead, thus providing a strict improvement over RTIC's current single-unit resource design.
 
-In this work we contribute with the API design of RTIC-RW and show that its implementation successfully enforces the Rust memory safety invariants #pawel("Again, we should explicitly define the invariants we are trying to uphold somewhere, or let someone else do it for us by citation") at compile time.
-#per("As above")
+In this work, we contribute the API design of RTIC-RW and show that its implementation successfully enforces the Rust memory-safety invariants (@rust_safety_invariants) at compile time.
+
 == RTIC-core, Proposed MutexRW trait
 
 ```rust
@@ -279,9 +279,9 @@ pub trait MutexRW {
     fn write_lock<R>(&mut self, f: impl FnOnce(&mut Self::T) -> R) -> R;
 }
 ```
-As described in @rust_memory_safety, the Rust concept of borrowing allows strictly either multiple immutable borrows, or a single mutable borrow of any underlying value. The `read_lock` method borrows `&self` (the proxy) in an immutable manner, thus allowing multiple concurrent readers. The `write_lock` method borrows `&mut self` (the proxy) in a mutable manner, thus allowing only a single writer.
+As described in @rust_memory_safety, Rust's borrowing rules allow either multiple immutable borrows or a single mutable borrow of any given value. The `read_lock` method takes `&self`, an immutable reference to the proxy, thus allowing multiple concurrent readers. The `write_lock` method takes `&mut self`, a mutable reference to the proxy, thus allowing only a single writer.
 
-In the following section, we will illustrate how the `MutexRW` implementation successfully leverages the Rust type system to reject Rust safety invariant violations at compile time.
+In the following section, we will illustrate how the `MutexRW` implementation successfully leverages the Rust type system to reject violations of Rust's memory-safety invariants at compile time.
 
 === Example Valid Nested Access
 
@@ -297,9 +297,7 @@ let (x, y) = mutex_rw.read_lock(|data| {
 });
 // do something with the copied data (x, y)
 ```
-Even if the `data` and `data_inner` are both references to the _same_ underlying data, follows the Rust borrowing invariants as both are immutable references, and thus the compiler will accept the program.
-
-The Rust compiler concludes that we can safely nest read locks, as the `read_lock` method borrows the proxy in an immutable manner.
+Even if the `data` and `data_inner` are both references to the _same_ underlying data, the nested `read_lock` follows Rust's borrowing invariants, and thus the compiler will accept the program. The Rust compiler concludes that we can safely nest read locks, as the `read_lock` method borrows the proxy in an immutable manner.
 
 We can safely copy the underlying data. The fields are of type `u32` (which implements the `Copy` trait), and return it from the closure.
 
