@@ -403,9 +403,9 @@ Beyond the RW case, the underlying SRP theory allows for general multi-unit reso
 
 = Conclusions <conclusions>
 
-In this paper we have reviewed the resource-proxy design of the Rust-based RTIC framework and highlighted the type system features that enable compile-time safety guarantees. We have also introduced an API extension that enables the usa of readers-writer locks and shown that the proposed API successfully enforces Rust's memory safety invariants at compile time.
+In this paper we have reviewed the resource-proxy design of the Rust-based RTIC framework and highlighted the type system features that enable compile-time safety guarantees. We have also introduced an API extension that enables the use of readers-writer locks and shown that the proposed API successfully enforces Rust's memory safety invariants at compile time.
 
-While RTIC-RW provides a strict improvement in scheduling properties over RTIC's current single unit resource design, prior work lacked an API design that ensures compile-time rejection of violations of Rust's safety invariants. In this work, we have detailed the API design of the underlying `MutexRW` and shown that its implementation successfully enforces these invariants at compile time.
+While RTIC-RW provides a strict improvement in scheduling properties over RTIC's current single unit resource design, prior work lacked an API design that ensures compile-time rejection of violations of Rust's safety invariants. In this work, we have detailed the API design of the underlying `MutexR/RW` and shown that its implementation successfully enforces these invariants at compile time.
 
 #show: appendix
 
