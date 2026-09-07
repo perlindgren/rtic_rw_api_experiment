@@ -372,7 +372,7 @@ A read-only proxy can only be used to read the underlying data. It will analogou
 
 = Discussion and Future Work<discussion>
 
-As a point of reflection, we note that the underlying SRP theory allows for general multi-unit resources. However, implementing the general case would require run-time tracking of the number of units currently held, and would thus incur run-time overhead. Whether this is acceptable in practice is left for future work.
+By defining a separate read-resource-proxy that provides only a `read_lock` operation, an RTIC task may be given read-only access to a resource. The current API can be modified to allow for an additional keyword in the task definition to instruct the macro that the task only reads an RW resource and should be given access to the read-proxy rather than the mutex-proxy. Despite there being two proxies to the same resource, Rust's memory safety invariants are not violated if it is ensured that a task will get access to at most one proxy of each resource. The proposed additional keyword can also be used by the macros to determine resource access types and the resource ceiling associated with each resource's read and write lock.
 
 Another observation is that, while such an operation is not safe in Rust, SRP itself permits a write lock to be acquired inside a read lock if no other job holds locks of the resource, while still preserving all scheduling guarantees provided by SRP.
 
@@ -397,7 +397,9 @@ Still, for reasons of code clarity/safety, demotion may be useful and would not 
 
 The situation of promotion is more complex, as re-borrowing an immutable reference to obtain a mutable reference would directly violate the Rust borrowing invariants.
 
-To this end we might consider an API extension to allow for promotion of a read lock to a write lock. This however is out of scope for this paper, and is left for future work.
+To this end, we might consider an API extension to allows promotion of a read lock to a write lock. This however is out of scope for this paper, and is left for future work.
+
+Beyond the RW case, the underlying SRP theory allows for general multi-unit resources. However, implementing the general case would require run-time tracking of the number of units currently held, and would thus incur run-time overhead. Whether this is acceptable in practice is left for future work.
 
 = Conclusions <conclusions>
 
